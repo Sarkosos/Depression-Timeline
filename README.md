@@ -4,4 +4,4 @@ We're creating a timeline of
   - Suicide rates
   - Publication rates
   
-of /antibiotic classes/
+of *antibiotic classes*
