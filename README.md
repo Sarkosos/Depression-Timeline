@@ -1,8 +1,9 @@
 # Depression-Timeline
-We're creating a timeline of 
+
 ***
-  - Prescription rates
-  - Suicide rates
-  - Publication rates
-  
-of *antibiotic classes*
+ - Lethal Dose
+ - Affective Dose
+ - Primary Pharma
+ - Secondary Pharma
+ 
+ for any *antidepresant input*
