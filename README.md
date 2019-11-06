@@ -1,9 +1,10 @@
-# Depression-Timeline
+# User-friendly drug search engine 
 
 ***
+## What the search engine returns 
  - Lethal Dose
  - Affective Dose
- - Primary Pharma
- - Secondary Pharma
+ - Primary Pharma (desired effect)
+ - Secondary Pharma (undesired effect)
  
- for any *antidepresant input*
+ And outputs a table of the above properties for each searched drug.
