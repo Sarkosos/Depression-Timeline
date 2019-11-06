@@ -28,6 +28,13 @@ WHERE
       const simpleResults = wdk.simplify.sparqlResults(results) 
       document.getElementById('output').innerHTML =             //simplifys JSON to not display uri, etc.
         JSON.stringify(simpleResults, undefined, 2);
+          let drugUser = 'adenosine';                           //hardcoded, replace with user imput
+      for (i=0; i<simpleResults.length; i++){
+        if (simpleResults[i].drug.label === drugUser){
+          console.log(simpleResults[i].ID);                     //prints ID for adenosine
+        }
+      }
+
     }
     main()
   </script>
