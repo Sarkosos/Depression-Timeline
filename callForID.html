@@ -1,0 +1,28 @@
+<!--
+	This is an alternative executon of 'query for drug PubChem IDs in html'
+	The difference is in breaking the code into two separate files, which 
+		should help in working and handing off of variables.
+	
+	This HTML file does:
+	Initializes a global WBK function
+	Initializes a global WDK object using the WBK object
+	Creates an output element pre with ID "output"
+	Calls queryForPubChemID.js JavaScript script, which returns ID of the requested 
+		drug for PubChem database.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8"/>					<!-- Fixes an issue FireFox is having -->
+	<!-- Initialize a global WBK function -->
+    <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikibase-sdk.min.js"></script>
+    <!-- Initialize a global wdk object using the WBK object -->
+    <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikidata-sdk.min.js"></script>
+</head>
+<body>
+	<pre id="output"></pre>
+
+	<script src = "queryForPubChemID.js" type="text/javascript"></script>
+</body>
+</html>

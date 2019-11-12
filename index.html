@@ -1,0 +1,25 @@
+<!--
+	The initial page of our project
+	
+	What does it do:
+	Asks for input of the drug
+	initiates callForID.html which will hand off the information to the queryForPubChemID.js
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8"/>					<!-- Fixes an issue FireFox is having -->
+</head>
+<body>
+	<section>
+		<h1> Enter your drug of choice </h1>
+		<form action="./callForIPubChemD.html" method="GET" target="_blank">
+			<label for="drug"> Drug: </label>
+			<input type="text" name="drug" id="drug" required>
+			<br>
+			<input type="submit" value="Submit">
+		</form>
+	</section>
+</body>
+</html>
