@@ -11,7 +11,8 @@
 
 //Grab the URLs
 const drugSubDirt = new URLSearchParams(window.location.search);
-//console.log(drugSubmitted);
+//console.log(drugSubDirt);
+
 
 //Cleanup function
 function clean (str){
@@ -21,9 +22,32 @@ function clean (str){
   return temp.toLowerCase();
 }
 
+/*
+potential alternative for a cleanup function
+function parseURLParams(url) {
+    var queryStart = url.indexOf("?") + 1,
+        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+        query = url.slice(queryStart, queryEnd - 1),
+        pairs = query.replace(/\+/g, " ").split("&"),
+        parms = {}, i, n, v, nv;
+
+    if (query === url || query === "") return;
+
+    for (i = 0; i < pairs.length; i++) {
+        nv = pairs[i].split("=", 2);
+        n = decodeURIComponent(nv[0]);
+        v = decodeURIComponent(nv[1]);
+
+        if (!parms.hasOwnProperty(n)) parms[n] = [];
+        parms[n].push(nv.length === 2 ? v : null);
+    }
+    return parms;
+}
+*/
+
 //Create a clean variable
 const drugSubClean = clean(drugSubDirt.get('drug'));
-//console.log(drugSubClean);
+console.log(drugSubClean);
 
 query = `							
 SELECT DISTINCT ?drug ?drugLabel ?ID
@@ -39,8 +63,8 @@ WHERE
    
 const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
 async function main () {
-  const response = await fetch(url)					                 //sends querry (in string) to webservice
-  const results = await response.json()			               	 //gives body of http in json format
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const results  = await response.json()			               	 //gives body of http in json format
       
   const simpleResults = wdk.simplify.sparqlResults(results) 
 
