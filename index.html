@@ -19,11 +19,11 @@
 	<section>
 		<h1> Enter your drug of choice </h1>
 		<form action="./callForID.html" method="GET" target="_blank">
-			
+			<!-- 
 			<label for="drug"> Drug: </label>
 			<input type="text" name="drug" id="drug" required>
-
-<!--			
+ -->
+			<!-- 
 			Goal: 	To make a dynamic list for the user, showing and allowing searching through the possible drugs available 
 				  	at WikiData
 			Reason: Not all drugs are loaded on WikiData, this would allow the user to know what this can be used for
@@ -31,15 +31,15 @@
 					does not send the choice to callForID.html. Reason unknown
 Potential Solution: If the issue is with the loading of the data (relatively slow) a creation of local - provider-hosted textfile
 					that would store the name-data and could be periodically updated to reflect up-to-date WikiData registry
-
+ -->
 			<script type="text/javascript" src="listOfKnownDrugs.js"></script>
 
 			<label for="drug"> Drug: </label>
-			<input type="datalist" list="drug" required>
+			<input type="datalist" list="drug" name="drug" required>
 			<datalist id="drug">
-				
+				<option value="none">
 			</datalist>
--->
+
 			<br>
 			<input type="submit" value="Submit">
 		</form>
