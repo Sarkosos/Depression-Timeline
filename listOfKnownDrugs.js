@@ -28,16 +28,14 @@ async function main () {
   document.getElementById('output').innerHTML =              //displays the result on the page
     JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
   */
-let drugList = '';
-var counter = 0;
+  let drugList = '';
+  let counter = 0;
 //  let drugUser = drugSubClean;                               
   
   for (i=0; i < simpleResults.length; i++){
     drugList += `<option value="${simpleResults[i].drug.label}">`;
     counter++;
-    console.log(simpleResults[i].drug.label);
   }
-
 console.log(counter);
 document.getElementById('drug').innerHTML = drugList;
 }
