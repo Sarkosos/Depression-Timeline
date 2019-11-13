@@ -3,9 +3,9 @@
  *  This JavaScript file does:
  *  Grabs the provided drug name
  *  Parses out the name 
- *  Queries WikiData for PubChem ID of the supplied drug
+ *  Queries WikiData for Chembl ID of the supplied drug
  *  Parses out the ID from JSON file
- *  Returns a PubChem ID
+ *  Returns a Chembl ID
  *  
  */
 
@@ -60,7 +60,7 @@ function queryForID() {
   SELECT DISTINCT ?drug ?drugLabel ?ID
   WHERE
   {
-    VALUES ?idProp { wdt:P662 }
+    VALUES ?idProp { wdt:P592 }
     ?drug wdt:P31* wd:Q12140 .
     ?drug ?idProp ?ID . 
 
@@ -89,7 +89,7 @@ async function main (url) {
       
   for (i=0; i<simpleResults.length; i++){
     if (simpleResults[i].drug.label === drugUser){
-      console.log(simpleResults[i].ID + ' is a PubChem ID');                      //prints ID for adenosine into console
+      console.log(simpleResults[i].ID + ' is a Chembl ID');                      //prints ID for adenosine into console
       return simpleResults[i].ID;
      }
   }
