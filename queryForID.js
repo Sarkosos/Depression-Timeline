@@ -138,7 +138,7 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
 
 
 async function getID (url) {
-  const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const response = await fetch(url)					                 //sends querry (in string) to webservice
   const results  = await response.json()			               	 //gives body of http in json format
       
   const simpleResults = wdk.simplify.sparqlResults(results) 
@@ -152,7 +152,7 @@ async function getID (url) {
       
   for (i=0; i<simpleResults.length; i++){
     if (simpleResults[i].drug.label === drugUser){
-      console.log(simpleResults[i].ID);                      //prints ID for adenosine into console
+      console.log(simpleResults[i].ID);                      //prints ID for drug into console
       return simpleResults[i].ID;
      }
   }
