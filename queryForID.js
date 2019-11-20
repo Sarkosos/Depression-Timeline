@@ -208,14 +208,14 @@ async function getID (url) {
 
 // main(queryForID(P592))
 async function queryForPrimePharm(idIdentifier) { 
-
+alert(idIdentifier);
   query = 						
 `							
 SELECT DISTINCT ?drug ?drugLabel ?ID ?pphLabel
 
 WHERE {
    VALUES ?idProp { wdt:P662 }
-   VALUES ?drug { ${idIdentifier} }
+   VALUES ?drug {wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
   ?drug ?idProp ?ID .
 
