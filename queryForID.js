@@ -23,15 +23,6 @@ function parseURL() {
   const drugSubDirt = new URLSearchParams(window.location.search);
   //console.log(drugSubDirt);
 
-
-  //Cleanup function
-  function clean (str){
-    if(!str) return null
-    
-    let temp = str.trim()
-    return temp.toLowerCase();
-  }
-
   /*
   potential alternative for a cleanup function
   function parseURLParams(url) {
@@ -58,6 +49,26 @@ function parseURL() {
   //Create a clean variable
    return drugSubClean = clean(drugSubDirt.get('drug'));
   console.log(drugSubClean);
+}
+
+//Cleanup function
+function clean (str){
+  if(!str) return null
+  
+  let temp = str.trim()
+  return temp.toLowerCase();
+}
+
+function getChoiceArray() {
+  // body...
+  let arraySubClean = [];
+  const arraySubDirt = new URLSearchParams(window.location.search);
+
+  for (cnt = 0; cnt < 5; cnt++)  {
+    arraySubClean[cnt] = clean(arraySubDirt.get(`chbx${cnt}`));
+    console.log(arraySubClean);
+  }
+  return arraySubClean;
 }
 
 function queryForID(idIdentifier) {
