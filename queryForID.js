@@ -129,7 +129,7 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
-`                                                                //end of query                                                            //end of query
+`                                                                
 
    
  const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
@@ -207,7 +207,7 @@ async function getID (url) {
 }
 
 // main(queryForID(P592))
-function queryForPrimePharm(idIdentifier) { 
+async function queryForPrimePharm(idIdentifier) { 
 
   query = 						
 `							
@@ -228,8 +228,25 @@ OPTIONAL{?drug wdt:P2175 ?pph}
 `                                                                //end of query                                                            //end of query
 
    
- const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
- return url;
+ const url = wdk.sparqlQuery(query)			                 //preparing to send querry to webservice
+ const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const results  = await response.json()			               	 //gives body of http in json format
+      
+  const simpleResults = wdk.simplify.sparqlResults(results) 
+
+ /*
+  document.getElementById('output').innerHTML =              //displays the result on the page
+    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
+  */
+
+  let drugUser = parseURL();                               
+      
+  for (i=0; i<simpleResults.length; i++){
+    
+      console.log(simpleResults[i].pphLabel);                     
+      pph = simpleResults[i].pphLabel;
+  }
+ return pph;
 }
 
 
