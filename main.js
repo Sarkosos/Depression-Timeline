@@ -16,7 +16,7 @@ function createFinalOutput(idIdentifier){
 						(valArray[3]) ? queryForDrugInteraction(idIdentifier): 0,
 						(valArray[4]) ? queryForArticles(idIdentifier): 0,
 						(valArray[5]) ? queryForPregnancyCategory(idIdentifier): 0,
-					 ]
+				 ];
 
 
 
