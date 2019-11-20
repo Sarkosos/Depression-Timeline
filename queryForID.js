@@ -101,5 +101,247 @@ async function getID (url) {
   }
 }
 
+function queryForLD(idIdentifier) { //only works for aspirin and fentanyl
+
+  query = 						
+`							
+SELECT DISTINCT ?drug ?drugLabel ?ID ?ld 
+
+WHERE {
+   VALUES ?idProp { wdt:P662 }
+   VALUES ?drug { ${idIdentifier} }
+  ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+OPTIONAL{ ?drug wdt:P2240 ?ld}
+
+
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+`                                                                //end of query                                                            //end of query
+
+   
+ const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+ return url;
+}
+
+
+async function getID (url) {
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const results  = await response.json()			               	 //gives body of http in json format
+      
+  const simpleResults = wdk.simplify.sparqlResults(results) 
+
+ /*
+  document.getElementById('output').innerHTML =              //displays the result on the page
+    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
+  */
+
+  let drugUser = parseURL();                               
+      
+  for (i=0; i<simpleResults.length; i++){
+    if (simpleResults[i].drug.label === drugUser){
+      console.log(simpleResults[i].ID);                      //prints ID for adenosine into console
+      return simpleResults[i].ID;
+     }
+  }
+}
+
+// main(queryForID(P592))
+function queryForChemicalStructure(idIdentifier) { 
+
+  query = 						
+`							
+SELECT DISTINCT ?drug ?drugLabel ?ID ?chemStruct
+
+WHERE {
+   VALUES ?idProp { wdt:P662 }
+   VALUES ?drug { ${idIdentifier} }
+  ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+
+OPTIONAL{?drug wdt:P117 ?chemStruct} 
+
+
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+`                                                                //end of query                                                            //end of query
+
+   
+ const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+ return url;
+}
+
+
+async function getID (url) {
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const results  = await response.json()			               	 //gives body of http in json format
+      
+  const simpleResults = wdk.simplify.sparqlResults(results) 
+
+ /*
+  document.getElementById('output').innerHTML =              //displays the result on the page
+    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
+  */
+
+  let drugUser = parseURL();                               
+      
+  for (i=0; i<simpleResults.length; i++){
+    if (simpleResults[i].drug.label === drugUser){
+      console.log(simpleResults[i].ID);                      
+      return simpleResults[i].ID;
+     }
+  }
+}
+
+// main(queryForID(P592))
+function queryForPrimePharm(idIdentifier) { 
+
+  query = 						
+`							
+SELECT DISTINCT ?drug ?drugLabel ?ID ?pphLabel
+
+WHERE {
+   VALUES ?idProp { wdt:P662 }
+   VALUES ?drug { ${idIdentifier} }
+  ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+
+
+OPTIONAL{?drug wdt:P2175 ?pph}
+
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+`                                                                //end of query                                                            //end of query
+
+   
+ const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+ return url;
+}
+
+
+async function getID (url) {
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const results  = await response.json()			               	 //gives body of http in json format
+      
+  const simpleResults = wdk.simplify.sparqlResults(results) 
+
+ /*
+  document.getElementById('output').innerHTML =              //displays the result on the page
+    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
+  */
+
+  let drugUser = parseURL();                               
+      
+  for (i=0; i<simpleResults.length; i++){
+    if (simpleResults[i].drug.label === drugUser){
+      console.log(simpleResults[i].ID);                     
+      return simpleResults[i].ID;
+     }
+  }
+}
+
+// main(queryForID(P592))
+function queryForDrugInteraction(idIdentifier) {
+
+  query = 						
+`							
+SELECT DISTINCT ?drug ?drugLabel ?ID ?sdiLabel
+
+WHERE {
+   VALUES ?idProp { wdt:P662 }
+   VALUES ?drug { ${idIdentifier} }
+  ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+
+
+OPTIONAL{?drug wdt:P769 ?sdi}
+
+
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+`                                                                //end of query                                                            //end of query
+
+   
+ const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+ return url;
+}
+
+
+async function getID (url) {
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const results  = await response.json()			               	 //gives body of http in json format
+      
+  const simpleResults = wdk.simplify.sparqlResults(results) 
+
+ /*
+  document.getElementById('output').innerHTML =              //displays the result on the page
+    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
+  */
+
+  let drugUser = parseURL();                               
+      
+  for (i=0; i<simpleResults.length; i++){
+    if (simpleResults[i].drug.label === drugUser){
+      console.log(simpleResults[i].ID);                      
+      return simpleResults[i].ID;
+     }
+  }
+}
+
+// main(queryForID(P592))
+
+
+// main(queryForID(P592))
+function queryForPregnancyCategory(idIdentifier) { 
+
+  query = 						
+`							
+SELECT DISTINCT ?drug ?drugLabel ?ID ?pcLabel
+
+WHERE {
+   VALUES ?idProp { wdt:P662 }
+   VALUES ?drug { ${idIdentifier} }
+  ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+
+
+OPTIONAL{?drug wdt:P3489 ?pc}
+
+
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+`                                                                //end of query                                                            //end of query
+
+   
+ const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+ return url;
+}
+
+
+async function getID (url) {
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const results  = await response.json()			               	 //gives body of http in json format
+      
+  const simpleResults = wdk.simplify.sparqlResults(results) 
+
+ /*
+  document.getElementById('output').innerHTML =              //displays the result on the page
+    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
+  */
+
+  let drugUser = parseURL();                               
+      
+  for (i=0; i<simpleResults.length; i++){
+    if (simpleResults[i].drug.label === drugUser){
+      console.log(simpleResults[i].ID);                      
+      return simpleResults[i].ID;
+     }
+  }
+}
 
 // main(queryForID(P592))
