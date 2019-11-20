@@ -307,6 +307,58 @@ async function getID (url) {
 
 
 // main(queryForID(P592))
+function queryForArticles(idIdentifier) { 
+
+  query = 						
+`							
+SELECT DISTINCT ?drug ?drugLabel ?ID ?msLabel 
+WITH
+{
+SELECT DISTINCT ?drug ?ID 
+WHERE {
+  VALUES ?idProp { wdt:P662 }
+  VALUES ?drug { ${idIdentifier} }
+  ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+} LIMIT 1000
+} AS %RESULTS WITH {
+  SELECT DISTINCT ?drug ?ID ?ms
+  WHERE {
+    INCLUDE %RESULTS
+    ?ms wdt:P921 ?drug
+  }
+} AS %ARTICLES {
+  INCLUDE %ARTICLES
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+`                                                                //end of query                                                            //end of query
+
+   
+ const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+ return url;
+}
+
+
+async function getID (url) {
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const results  = await response.json()			               	 //gives body of http in json format
+      
+  const simpleResults = wdk.simplify.sparqlResults(results) 
+
+ /*
+  document.getElementById('output').innerHTML =              //displays the result on the page
+    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
+  */
+
+  let drugUser = parseURL();                               
+      
+  for (i=0; i<simpleResults.length; i++){
+    if (simpleResults[i].drug.label === drugUser){
+      console.log(simpleResults[i].ID);                      
+      return simpleResults[i].ID;
+     }
+  }
+}
 function queryForPregnancyCategory(idIdentifier) { 
 
   query = 						
@@ -354,5 +406,3 @@ async function getID (url) {
      }
   }
 }
-
-// main(queryForID(P592))
