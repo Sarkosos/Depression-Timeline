@@ -1,10 +1,17 @@
  // This is the 'lynchpin'  file for doing the computations
 let valArray = getChoiceArray();
 
-console.log(getID(queryForID('P592')));
-console.log(getID(queryForID('P662')));
-console.log(queryForPrimePharm('Q18216'));
-console.log(queryForPregnancyCategory('Q18216'));
+var input = getID(queryForID('P592'));
+	input.then(function(result){
+	// console.log(result);
+});
+
+// console.log(getID(queryForID('P592')));
+// console.log(getID(queryForID('P662')));
+// console.log(queryForPrimePharm('Q18216'));
+// console.log(queryForPregnancyCategory('Q18216'));
+
+// console.log(test);
 
 function createFinalOutput(idIdentifier){
 	let finalArray = [0]; 
@@ -22,4 +29,15 @@ function createFinalOutput(idIdentifier){
 	return finalArray;
 }
 
-console.log(createFinalOutput('Q18216'));
+// console.log(createFinalOutput('Q18216'));
+
+// let resultArray = JSON.stringify(createFinalOutput(await.input)); 
+
+async function main() {
+	// body...
+   let resultArray = createFinalOutput(await input); 
+
+   console.log(resultArray);
+}
+
+main();

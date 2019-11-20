@@ -47,7 +47,7 @@ function parseURL() {
   */
 
   //Create a clean variable
-   return drugSubClean = clean(drugSubDirt.get('drug'));
+  return drugSubClean = clean(drugSubDirt.get('drug'));
   console.log(drugSubClean);
 }
 
@@ -66,7 +66,7 @@ function getChoiceArray() {
 
   for (cnt = 0; cnt < 6; cnt++)  {
     arraySubClean[cnt] = clean(arraySubDirt.get(`chbx${cnt}`));
-    console.log(arraySubClean);
+    // console.log(arraySubClean);
   }
   return arraySubClean;
 }
@@ -102,13 +102,19 @@ async function getID (url) {
     JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
   */
 
-  let drugUser = parseURL();                               
+  var drugUser = parseURL(); 
+  var output;                              
       
   for (i=0; i<simpleResults.length; i++){
     if (simpleResults[i].drug.label === drugUser){
-      return simpleResults[i].ID;
+      // console.log(simpleResults[i].drug.value);
+      // return simpleResults[i].ID;
+      output = simpleResults[i].drug.value;
+      // console.log(output);
      }
   }
+  return output;
+
 }
 
 async function queryForLD(idIdentifier) { //only works for aspirin and fentanyl
