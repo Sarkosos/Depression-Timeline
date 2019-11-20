@@ -64,7 +64,7 @@ function getChoiceArray() {
   let arraySubClean = [];
   const arraySubDirt = new URLSearchParams(window.location.search);
 
-  for (cnt = 0; cnt < 5; cnt++)  {
+  for (cnt = 0; cnt < 6; cnt++)  {
     arraySubClean[cnt] = clean(arraySubDirt.get(`chbx${cnt}`));
     console.log(arraySubClean);
   }
@@ -244,7 +244,7 @@ OPTIONAL{?drug wdt:P2175 ?pph}
 
 
 // main(queryForID(P592))
-function queryForDrugInteraction(idIdentifier) {
+async function queryForDrugInteraction(idIdentifier) {
 
   query = 						
 `							
@@ -282,7 +282,7 @@ OPTIONAL{?drug wdt:P769 ?sdi}
       
   for (i=0; i<simpleResults.length; i++){
 
-      drugInteraction = simpleResults[i].sdiLabel;
+      drugInteraction[i] = simpleResults[i].sdiLabel;
   
   }
   return drugInteraction
@@ -290,7 +290,7 @@ OPTIONAL{?drug wdt:P769 ?sdi}
 
 
 
-function queryForArticles(idIdentifier) { 
+async function queryForArticles(idIdentifier) { 
 
   query = 						
 `							
@@ -341,7 +341,7 @@ WHERE {
 
 
 
-function queryForPregnancyCategory(idIdentifier) { 
+async function queryForPregnancyCategory(idIdentifier) { 
 
   query = 						
 `							
@@ -380,8 +380,9 @@ OPTIONAL{?drug wdt:P3489 ?pc}
   for (i=0; i<simpleResults.length; i++){
 
       
-     pregnancyCategory[i] = simpleResults[i].msLabel;
+     pregnancyCategory[i] = simpleResults[i].pcLabel;
   }
+  // console.log(pregnancyCategory);
   return pregnancyCategory
 }
 

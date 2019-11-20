@@ -4,7 +4,7 @@ let valArray = getChoiceArray();
 console.log(getID(queryForID('P592')));
 console.log(getID(queryForID('P662')));
 console.log(queryForPrimePharm('Q18216'));
-
+console.log(queryForPregnancyCategory('Q18216'));
 
 function createFinalOutput(idIdentifier){
 	let finalArray = [0]; 
@@ -19,7 +19,7 @@ function createFinalOutput(idIdentifier){
 				 ];
 
 
-
+	return finalArray;
 }
 
-createFinalOutput('Q18216');
+console.log(createFinalOutput('Q18216'));
