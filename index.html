@@ -1,6 +1,6 @@
 <!--
 	The initial page of our project
-	
+
 	What does it do:
 	Asks for input of the drug
 	initiates callForID.html which will hand off the information to the queryForPubChemID.js
@@ -14,16 +14,40 @@
     <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikibase-sdk.min.js"></script>
     <!-- Initialize a global wdk object using the WBK object -->
     <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikidata-sdk.min.js"></script>
+
+		<style>
+			form {
+			color: black;
+			text-align: center;
+			}
+			h1 {
+			color: blue;
+			text-align: center;
+			}
+			p {
+			color: #001a66;
+			text-align: center;
+			}
+			body {
+		  background-color: lightblue;
+			}
+			#format  {
+				width: 400px;
+			}
+
+			</datalist>
+		</style>
 </head>
 <body>
 	<section>
 		<h1> Enter your drug of choice </h1>
+
 		<form action="./callForID.html" method="GET" target="_blank">
 		<!--
 			<input type="text" name="drug" id="drug" required>
 			-->
 <!--
-			Goal: 	To make a dynamic list for the user, showing and allowing searching through the possible drugs available 
+			Goal: 	To make a dynamic list for the user, showing and allowing searching through the possible drugs available
 				  	at WikiData
 			Reason: Not all drugs are loaded on WikiData, this would allow the user to know what this can be used for
 			Issue: 	The creation of dynamic list is working, with proper loading of the data, however when submitting, it
@@ -33,25 +57,31 @@ Potential Solution: If the issue is with the loading of the data (relatively slo
  -->
 			<script type="text/javascript" src="listOfKnownDrugs.js"></script>
 
+
 			<label for="drug"> Drug: </label>
-			<input type="datalist" name="drug" list="drug" required>
+			<input type="datalist" id="format" name="drug" list="drug" required>
 			<datalist id="drug">
 				<option value="none">
 			</datalist>
-			LD50
+				<p> </p>
+
 			<input type="checkbox" name="chbx0" value="true">
-			Other thing
+			LD50
 			<input type="checkbox" name="chbx1" value="true">
-			Other thing
+			Chemical Structure
 			<input type="checkbox" name="chbx2" value="true">
-			Other thing
+			Primary Pharmacology
 			<input type="checkbox" name="chbx3" value="true">
-			Other thing
+			Significant Drug Interaction
 			<input type="checkbox" name="chbx4" value="true">
+			Articles
+			<input type="checkbox" name="chbx5" value="true">
+			Pregnancy Category
 
-
+			<p> </p>
 			<br>
 			<input type="submit" value="Submit">
+			<p>Welcome to our drug information website! Enter the drug or chemical compound you wish to investigate, and we will show you all the information available on it on Wikidata.</p>
 		</form>
 	</section>
 

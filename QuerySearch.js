@@ -13,4 +13,6 @@ WHERE
 
 const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
 return url;
+
+//format into
 }
