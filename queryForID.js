@@ -17,34 +17,9 @@
  */
 
 function parseURL() {
-  // body...
-
+  
   //Grab the URLs
   const drugSubDirt = new URLSearchParams(window.location.search);
-  //console.log(drugSubDirt);
-
-  /*
-  potential alternative for a cleanup function
-  function parseURLParams(url) {
-      var queryStart = url.indexOf("?") + 1,
-          queryEnd   = url.indexOf("#") + 1 || url.length + 1,
-          query = url.slice(queryStart, queryEnd - 1),
-          pairs = query.replace(/\+/g, " ").split("&"),
-          parms = {}, i, n, v, nv;
-
-      if (query === url || query === "") return;
-
-      for (i = 0; i < pairs.length; i++) {
-          nv = pairs[i].split("=", 2);
-          n = decodeURIComponent(nv[0]);
-          v = decodeURIComponent(nv[1]);
-
-          if (!parms.hasOwnProperty(n)) parms[n] = [];
-          parms[n].push(nv.length === 2 ? v : null);
-      }
-      return parms;
-  }
-  */
 
   //Create a clean variable
   return drugSubClean = clean(drugSubDirt.get('drug'));
@@ -60,13 +35,12 @@ function clean (str){
 }
 
 function getChoiceArray() {
-  // body...
+  
   let arraySubClean = [];
   const arraySubDirt = new URLSearchParams(window.location.search);
 
   for (cnt = 0; cnt < 6; cnt++)  {
     arraySubClean[cnt] = clean(arraySubDirt.get(`chbx${cnt}`));
-    // console.log(arraySubClean);
   }
   return arraySubClean;
 }
@@ -97,11 +71,6 @@ async function getID (url) {
       
   const simpleResults = wdk.simplify.sparqlResults(results) 
 
- /*
-  document.getElementById('output').innerHTML =              //displays the result on the page
-    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
-  */
-
   var drugUser = parseURL(); 
   var output;                              
       
@@ -110,7 +79,6 @@ async function getID (url) {
       // console.log(simpleResults[i].drug.value);
       // return simpleResults[i].ID;
       output = simpleResults[i].drug.value;
-      // console.log(output);
      }
   }
   return output;
@@ -137,16 +105,11 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
 `                                                                
 
    
- const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+  const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
   const response = await fetch(url)					                  //sends querry (in string) to webservice
   const results  = await response.json()			               	 //gives body of http in json format
       
   const simpleResults = wdk.simplify.sparqlResults(results) 
-
- /*
-  document.getElementById('output').innerHTML =              //displays the result on the page
-    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
-  */
 
   let drugUser = parseURL();
   let ld = [];                               
@@ -156,7 +119,7 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
       ld[i] =  simpleResults[i].ld;
      
   }
-  return ld
+  return ld;
 }
 
 
@@ -183,17 +146,12 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
 `                                                                //end of query                                                            //end of query
 
    
- const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+  const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
 
   const response = await fetch(url)					                  //sends querry (in string) to webservice
   const results  = await response.json()			               	 //gives body of http in json format
       
   const simpleResults = wdk.simplify.sparqlResults(results) 
-
- /*
-  document.getElementById('output').innerHTML =              //displays the result on the page
-    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
-  */
 
   let drugUser = parseURL();  
   let chemicalStructure = []                             
@@ -201,7 +159,7 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
   for (i=0; i<simpleResults.length; i++){
       chemicalStructure[i] = simpleResults[i].chemStruct;
      }
-  return chemicalStructure
+  return chemicalStructure;
 }
 
 
@@ -226,16 +184,11 @@ OPTIONAL{?drug wdt:P2175 ?pph}
 `                                                                //end of query                                                            //end of query
 
    
- const url = wdk.sparqlQuery(query)			                 //preparing to send querry to webservice
- const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const url = wdk.sparqlQuery(query)			                 //preparing to send querry to webservice
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
   const results  = await response.json()			               	 //gives body of http in json format
       
   const simpleResults = wdk.simplify.sparqlResults(results) 
-
- /*
-  document.getElementById('output').innerHTML =              //displays the result on the page
-    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
-  */
 
   let drugUser = parseURL();    
   let pph = [];                     
@@ -272,16 +225,11 @@ OPTIONAL{?drug wdt:P769 ?sdi}
 `                                                                //end of query                                                            //end of query
 
    
- const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
- const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
   const results  = await response.json()			               	 //gives body of http in json format
       
   const simpleResults = wdk.simplify.sparqlResults(results) 
-
- /*
-  document.getElementById('output').innerHTML =              //displays the result on the page
-    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
-  */
 
   let drugUser = parseURL();
   let drugInteraction = [];                            
@@ -291,7 +239,7 @@ OPTIONAL{?drug wdt:P769 ?sdi}
       drugInteraction[i] = simpleResults[i].sdiLabel;
   
   }
-  return drugInteraction
+  return drugInteraction;
 }
 
 
@@ -323,16 +271,11 @@ WHERE {
 `                                                                //end of query                                                            //end of query
 
    
- const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
- const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
   const results  = await response.json()			               	 //gives body of http in json format
       
   const simpleResults = wdk.simplify.sparqlResults(results) 
-
- /*
-  document.getElementById('output').innerHTML =              //displays the result on the page
-    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
-  */
 
   let drugUser = parseURL();
   let articles = []                             
@@ -342,7 +285,7 @@ WHERE {
       
      articles[i] = simpleResults[i].msLabel;
   }
-  return articles
+  return articles;
 }
 
 
@@ -369,16 +312,11 @@ OPTIONAL{?drug wdt:P3489 ?pc}
 `                                                                //end of query                                                            //end of query
 
    
- const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
- const response = await fetch(url)					                  //sends querry (in string) to webservice
+  const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
+  const response = await fetch(url)					                  //sends querry (in string) to webservice
   const results  = await response.json()			               	 //gives body of http in json format
       
   const simpleResults = wdk.simplify.sparqlResults(results) 
-
- /*
-  document.getElementById('output').innerHTML =              //displays the result on the page
-    JSON.stringify(simpleResults, undefined, 2);             //simplifys JSON to not display uri, etc.
-  */
 
   let drugUser = parseURL();
   let pregnancyCategory = []                             
@@ -388,8 +326,7 @@ OPTIONAL{?drug wdt:P3489 ?pc}
       
      pregnancyCategory[i] = simpleResults[i].pcLabel;
   }
-  // console.log(pregnancyCategory);
-  return pregnancyCategory
+  return pregnancyCategory;
 }
 
 
