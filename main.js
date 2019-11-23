@@ -1,41 +1,24 @@
- // This is the 'lynchpin'  file for doing the computations
+// This is the 'lynchpin'  file for doing the computations
+// This JavaScript does:
+// Take the User choice: 
+// 			Which drug is the user interested in?
+// 			Which categories is the user interested in? 
+// Retrieve the proper datapoints
+// Create the final array: populate it with resolved Promises
+// Create final output: produce it as an array of arrays, not as a Promise
+// 
+// Final Result: an array of arrays called   finArr
+// 				 has 6 primary elements, filled with arrays of variable lenghts 
+// 				 dependent on the data available on WikiData
+// 
+
+// Get the User choice
 let valArray = getChoiceArray();
 
-// var input = getID(queryForID('P592'));
-// 	input.then(function(result){
-// 	// console.log(result);
-// });
-
-// let resLD = queryForID(idIdentifier);
-// 	resLD.then(function(result){
-// 		// console.log(result)
-// });
-
-// async function test1(){
-// 	// let finalTest = resLD
-// 	let idIdentifier = await input;
-
-// 	let resLD = queryForLD(idIdentifier);
-// 	resLD.then(function(result){
-// 		// console.log(result)
-// 	});
-
-// 	let finalTest = await resLD;
-// 	console.log(finalTest);
-// }
-
-// test1();
-
-// console.log(getID(queryForID('P592')));
-// console.log(getID(queryForID('P662')));
-// console.log(queryForPrimePharm('Q18216'));
-// console.log(queryForPregnancyCategory('Q18216'));
-
-// console.log(test);
-
+// Construct a Promise type of array, fill it with values
 async function createFinalOutput(idIdentifier){
 	
-	
+	// Create ways how to unpack Promises returned by the primary Query functions
 	let resLD = queryForLD(idIdentifier);
 		resLD.then(function(result){});
 
@@ -57,6 +40,7 @@ async function createFinalOutput(idIdentifier){
 
 	let finalArray = [0]; 
 
+	// Assign values unpacked from Promises retrieved from Queries into an array
 	finalArray = [ 
 						(valArray[0]) ? await resLD: 0, 
 						(valArray[1]) ? await resChemStr: 0,
@@ -70,24 +54,20 @@ async function createFinalOutput(idIdentifier){
 	return finalArray;
 }
 
-// console.log(createFinalOutput('Q18216'));
-
-// let resultArray = JSON.stringify(createFinalOutput(await.input)); 
-
+// Construct the final array 
 async function finaliseResultsFromPromises() {
-	// body...
+   
+   // Retrieve a WikiData-useful identifier of the drug provided
    var input = getID(queryForID('P592'));
-	input.then(function(result){
-	// console.log(result);
-   });
+       input.then(function(result){});
 
-   // let resultArray = createFinalOutput(await input); 
-
+   // Get the Array provided by createFinalOutput, provide the WikiData identifier
    let finArr = createFinalOutput(await input);
    	   finArr.then(function(result){});
 
-   // console.log(resultArray);
+   // Wait for the Promise to be resolved and then return it
    console.log(await finArr);
+   return finArr;
 }
 
 finaliseResultsFromPromises();
