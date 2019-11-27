@@ -16,28 +16,39 @@
     <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikidata-sdk.min.js"></script>
 
 		<style>
+			section {
+				width: 800px;
+				margin: 0 auto;
+			}
 			form {
-			color: #001a66;
-			text-align: center;
+				color: white;
+				text-align: center;
 			}
 			h1 {
-			color: blue;
-			text-align: center;
+				color: lightblue;
+				text-align: center;
 			}
 			p {
-			color: #001a66;
-			text-align: center;
+				color: white;
+				text-align: center;
 			}
-			body {
-		  background-color: lightblue;
-			}
+			body{
+		    background-color: #208DED;
+				margin-left: 8%;
+				margin-right: 8%;
+		  }
 			#format  {
 				width: 400px;
+			}
+			a{
+				color: white;
+				font-size: 20px;
 			}
 
 			</datalist>
 		</style>
 </head>
+<a href="aboutUsPage.html">About Us</a>
 <body>
 	<section>
 		<h1> Enter your drug of choice </h1>
@@ -65,26 +76,24 @@ Potential Solution: If the issue is with the loading of the data (relatively slo
 			</datalist>
 				<p> </p>
 
-			<input type="checkbox" name="chbx0" value="true">
+			<input type="checkbox" name="chbx0" value="true" checked>
 			LD50
-			<input type="checkbox" name="chbx1" value="true">
+			<input type="checkbox" name="chbx1" value="true" checked>
 			Chemical Structure
-			<input type="checkbox" name="chbx2" value="true">
+			<input type="checkbox" name="chbx2" value="true" checked>
 			Primary Pharmacology
-			<input type="checkbox" name="chbx3" value="true">
+			<input type="checkbox" name="chbx3" value="true" checked>
 			Significant Drug Interaction
-			<input type="checkbox" name="chbx4" value="true">
+			<input type="checkbox" name="chbx4" value="true" checked>
 			Articles
-			<input type="checkbox" name="chbx5" value="true">
+			<input type="checkbox" name="chbx5" value="true" checked>
 			Pregnancy Category
 
 			<p> </p>
 			<br>
 			<input type="submit" value="Submit">
 			<p>Welcome to our drug information website! Enter the drug or chemical compound you wish to investigate, and we will show you all the information available on it on Wikidata.</p>
-			<img
-			src="picture.jpeg" height="20%" width="20%" alt="Picture of group"
-			/>
+
 		</form>
 	</section>
 
