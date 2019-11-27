@@ -40,17 +40,36 @@ async function createFinalOutput(idIdentifier){
 
 	let finalArray = [0]; 
 
+	// let holdLD			= (valArray[0]) ? await resLD: 0;
+	// let holdChemStr		= (valArray[1]) ? await resChemStr: 0;
+	// let holdPrimPha		= (valArray[2]) ? await resPrimPha: 0;
+	// let holdDrugInt		= (valArray[3]) ? await resDrugInt: 0;
+	// let holdArticle		= (valArray[4]) ? await resArticle: 0;
+	// let holdPregCat		= (valArray[5]) ? await resPregCat: 0;
+
+
 	// Assign values unpacked from Promises retrieved from Queries into an array
 	finalArray = [ 
-						(valArray[0]) ? await resLD: 0, 
-						(valArray[1]) ? await resChemStr: 0,
-						(valArray[2]) ? await resPrimPha: 0,
-						(valArray[3]) ? await resDrugInt: 0,
-						(valArray[4]) ? await resArticle: 0,
-						(valArray[5]) ? await resPregCat: 0,
+						`{
+						"LD50"   :  ${(valArray[0]) ? await resLD: 0}, 
+						"ChemStr":  ${(valArray[1]) ? await resChemStr: 0},
+						"PrimPha":  ${(valArray[2]) ? await resPrimPha: 0},
+						"DrugInt":  ${(valArray[3]) ? await resDrugInt: 0},
+						"Article":  ${(valArray[4]) ? await resArticle: 0},
+						"PregCat":  ${(valArray[5]) ? await resPregCat: 0},
+						}`
+						
+						// `{
+						// "LD50"   :  ${holdLD}, 
+						// "ChemStr":  ${holdChemStr},
+						// "PrimPha":  ${holdPrimPha},
+						// "DrugInt":  ${holdDrugInt},
+						// "Article":  ${holdArticle},
+						// "PregCat":  ${holdPregCat}	
+						// }`
 				 ];
 
-
+	console.log(finalArray)	 
 	return finalArray;
 }
 
@@ -66,8 +85,12 @@ async function finaliseResultsFromPromises() {
    	   finArr.then(function(result){});
 
    // Wait for the Promise to be resolved and then return it
-   console.log(await finArr);
+   // console.log(JSON.stringify(await finArr));
    return finArr;
 }
 
-finaliseResultsFromPromises();
+async function output(){
+	document.getElementById('output').innerHTML = await finaliseResultsFromPromises();
+}
+
+output();
