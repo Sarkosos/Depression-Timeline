@@ -59,7 +59,6 @@ function queryForID(idIdentifier) {
   }
 `                                                                //end of query
 
-   
  const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
  return url;
 }

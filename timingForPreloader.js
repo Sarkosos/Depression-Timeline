@@ -1,3 +1,5 @@
+// Under work, secondary functionality
+
 var timeoutID;
 
 function delayTimer() {

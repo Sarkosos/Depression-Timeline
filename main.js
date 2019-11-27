@@ -17,57 +17,25 @@ let valArray = getChoiceArray();
 
 // Construct a Promise type of array, fill it with values
 async function createFinalOutput(idIdentifier){
-	
-	// Create ways how to unpack Promises returned by the primary Query functions
-	let resLD = queryForLD(idIdentifier);
-		resLD.then(function(result){});
-
-	let resChemStr = queryForChemicalStructure(idIdentifier);
-		resChemStr.then(function(result){});
-
-	let resPrimPha = queryForPrimePharm(idIdentifier);
-		resPrimPha.then(function(result){});
-
-	let resDrugInt = queryForDrugInteraction(idIdentifier);
-		resDrugInt.then(function(result){});
-	
-	let resArticle = queryForArticles(idIdentifier);
-		resArticle.then(function(result){});
-	
-	let resPregCat = queryForPregnancyCategory(idIdentifier);
-		resPregCat.then(function(result){});
-
-
 	let finalArray = [0]; 
 
-	// let holdLD			= (valArray[0]) ? await resLD: 0;
-	// let holdChemStr		= (valArray[1]) ? await resChemStr: 0;
-	// let holdPrimPha		= (valArray[2]) ? await resPrimPha: 0;
-	// let holdDrugInt		= (valArray[3]) ? await resDrugInt: 0;
-	// let holdArticle		= (valArray[4]) ? await resArticle: 0;
-	// let holdPregCat		= (valArray[5]) ? await resPregCat: 0;
-
+    ldData = await queryForLD(idIdentifier);
+    console.log(JSON.stringify(ldData, undefined, 2));
 
 	// Assign values unpacked from Promises retrieved from Queries into an array
 	finalArray = [ 
-						`{
-						"LD50"   :  ${(valArray[0]) ? await resLD: 0}, 
-						"ChemStr":  ${(valArray[1]) ? await resChemStr: 0},
-						"PrimPha":  ${(valArray[2]) ? await resPrimPha: 0},
-						"DrugInt":  ${(valArray[3]) ? await resDrugInt: 0},
-						"Article":  ${(valArray[4]) ? await resArticle: 0},
-						"PregCat":  ${(valArray[5]) ? await resPregCat: 0},
-						}`
-						
-						// `{
-						// "LD50"   :  ${holdLD}, 
-						// "ChemStr":  ${holdChemStr},
-						// "PrimPha":  ${holdPrimPha},
-						// "DrugInt":  ${holdDrugInt},
-						// "Article":  ${holdArticle},
-						// "PregCat":  ${holdPregCat}	
-						// }`
+						{
+						"LD50"   :  (valArray[0]) ? await queryForLD(idIdentifier): 0, 
+						"ChemStr":  (valArray[1]) ? await queryForChemicalStructure(idIdentifier): 0,
+						"PrimPha":  (valArray[2]) ? await queryForPrimePharm(idIdentifier): 0,
+						"DrugInt":  (valArray[3]) ? await queryForDrugInteraction(idIdentifier): 0,
+						"Article":  (valArray[4]) ? await queryForArticles(idIdentifier): 0,
+						"PregCat":  (valArray[5]) ? await queryForPregnancyCategory(idIdentifier): 0,
+						}
 				 ];
+	// finalArray = {
+	// 	"LD50"   : ldData
+	// }
 
 	console.log(finalArray)	 
 	return finalArray;
@@ -75,22 +43,20 @@ async function createFinalOutput(idIdentifier){
 
 // Construct the final array 
 async function finaliseResultsFromPromises() {
-   
    // Retrieve a WikiData-useful identifier of the drug provided
    var input = getID(queryForID('P592'));
-       input.then(function(result){});
 
    // Get the Array provided by createFinalOutput, provide the WikiData identifier
    let finArr = createFinalOutput(await input);
-   	   finArr.then(function(result){});
 
    // Wait for the Promise to be resolved and then return it
-   // console.log(JSON.stringify(await finArr));
    return finArr;
 }
 
 async function output(){
-	document.getElementById('output').innerHTML = await finaliseResultsFromPromises();
+	data = await finaliseResultsFromPromises();
+	txt = JSON.stringify(data, undefined, 2);
+	document.getElementById('output').innerHTML = '<pre>' + txt + '</pre>';
 }
 
 output();
