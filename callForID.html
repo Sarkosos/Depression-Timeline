@@ -15,20 +15,36 @@
 <head>
 	<title></title>
 	<meta charset="utf-8"/>					<!-- Fixes an issue FireFox is having -->
+	<style type="text/css">
+		.center 
+		{
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
+		  margin-top: auto;
+		  margin-bottom: auto;
+		  width: 50%;
+		}
+	</style>
 	<!-- Initialize a global WBK function -->
     <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikibase-sdk.min.js"></script>
     <!-- Initialize a global wdk object using the WBK object -->
     <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikidata-sdk.min.js"></script>
 </head>
 <body>
-	<pre id="output"></pre>
 
 	<!-- 
 	<script src = "queryForPubChemID.js" type="text/javascript"></script>	
 	<script src = "queryForChemblID.js" type="text/javascript"></script> 
 	-->
 	<script src = "queryForID.js" 	type="text/javascript"></script> <!-- This is a Function-Full script, that is reqyired for
+	
 																		  the main.js to work -->
+	<article id="output">
+		<embed>
+			<img src ="loadingBookGif.gif" class="center" >
+		</embed>
+	</article>
 	<script src = "main.js" 		type="text/javascript"></script>
 </body>
 </html>
