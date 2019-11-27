@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Drug Info</title>
 	<meta charset="utf-8"/>					<!-- Fixes an issue FireFox is having -->
 	<!-- Initialize a global WBK function -->
     <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikibase-sdk.min.js"></script>
@@ -27,15 +27,18 @@
 			h1 {
 				color: lightblue;
 				text-align: center;
+				margin-top: 5%;
 			}
 			p {
 				color: white;
 				text-align: center;
+
 			}
 			body{
 		    background-color: #208DED;
 				margin-left: 8%;
 				margin-right: 8%;
+
 		  }
 			#format  {
 				width: 400px;
@@ -44,11 +47,14 @@
 				color: white;
 				font-size: 20px;
 			}
+			#picture {
+				top: 0px;
+				left: 0px;
+			}
 
-			</datalist>
 		</style>
 </head>
-<a href="aboutUsPage.html">About Us</a>
+<a href="aboutUsPage.html">About Us</a> 	<!--Extra page click button:)-->
 <body>
 	<section>
 		<h1> Enter your drug of choice </h1>
@@ -97,5 +103,10 @@ Potential Solution: If the issue is with the loading of the data (relatively slo
 		</form>
 	</section>
 
+	<div id="picture">		<!--CLickable logo of WikiData, goes to website.-->
+		<a href="https://www.wikidata.org/wiki/Wikidata:Main_Page" target="_blank">
+		<img src="wikiLogo.png" height="15%" width="15%" alt="WikiData logo" align="bottom-right"
+		></a>
+	</div>
 </body>
 </html>
