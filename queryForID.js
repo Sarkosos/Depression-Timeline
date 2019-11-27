@@ -180,7 +180,7 @@ OPTIONAL{?drug wdt:P2175 ?pph}
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
-`                                                                //end of query                                                            //end of query
+`                                                                //end of query                                                           
 
    
   const url = wdk.sparqlQuery(query)			                 //preparing to send querry to webservice
