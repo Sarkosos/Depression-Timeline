@@ -1,0 +1,34 @@
+<!doctype html xmlns:xlink="http://www.w3.org/1999/xlink">
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="js/jquery.js"></script>
+	<script src="js/d3.v3.min.js"></script>
+	<script src="dndTree.js"></script>
+	<link rel="stylesheet" href="dndTree.css">
+	<title>D3 Tree</title>
+</head>
+<body>
+    <div id="chart"></div>
+    <div id="bob"></div>
+
+<script type="text/javascript">
+$(function(){
+	window.tree = new dndTree("#chart");
+	loadissues();
+});
+
+function loadissues (){
+	d3.json("issues.json", function(json) {
+		tree.update(json);
+	});	
+} 
+
+function load(nbr) {
+	d3.json("flare" + (nbr == 2 ? 2 : "") + ".json", function(json) {
+		tree.update(json);
+	});	
+}
+    </script>
+  </body>
+</html>

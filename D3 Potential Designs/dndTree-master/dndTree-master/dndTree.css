@@ -1,0 +1,49 @@
+html, body {
+    font-family: helvetica, arial;
+    font-size: 15px;
+}
+
+#chart {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+g.node {
+    cursor: default;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+rect.issue {
+    fill: rgba(128, 0, 128, 0.1);
+}
+
+rect.dropArea {
+    fill: rgba(0, 128, 128, 0.1);
+}
+
+g.selected {
+    font-weight: bold;
+}
+
+g.selected rect.issue {
+    fill: rgba(255, 0, 0, 0.1);   
+}
+
+tspan.link {
+    fill: rgb(0,0,200);
+    text-decoration: underline;
+}
+
+#dragging {
+    background-color: rgba(0, 255, 0, 0.1);
+    position: absolute;
+    font-weight: normal;
+}
+
+#marker {
+    stroke: black;
+    stroke-width: 1px;
+}
+
+#marker.illegal {
+    stroke: red;
+}
