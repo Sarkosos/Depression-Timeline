@@ -58,17 +58,40 @@ async function createJSONOutput(idIdentifier){
 	// Assign data resulting from queries into a JSON variable
 	outJSON =   {
 				"Drug Name": name, 
-				"Attributes":{
-						"LD50"   :  dataLD, 
-						"ChemStr":  dataChemStr,
-						"PrimPha":  dataPrimPha,
-						"DrugInt":  dataDrugInt,
-						"Article":  dataArticle,
-						"PregCat":  dataPregCat,
+				"children":	[
+						{
+						"Name"		 : "LD50",
+						"children"   : 	dataLD },
+						{
+						"Name"		 : "ChemStr",
+						"children"   : 	dataChemStr
+						},
+						{
+						"Name"		 :  "PrimPha",
+						"children"   : 	dataPrimPha
+					    },
+					    {
+						"Name"		 : "DrugInt",
+						"children"   : 	dataDrugInt
+						},
+						{	
+						"Name"		 : "Article",
+						"children"   : 	dataArticle
+						},
+						{
+						"Name"		 : "PregCat",
+						"children"   : 	dataPregCat
 						}
+						// "LD50"   :  dataLD,
+						// "ChemStr":  dataChemStr,
+						// "PrimPha":  dataPrimPha,
+						// "DrugInt":  dataDrugInt,
+						// "Article":  dataArticle,
+						// "PregCat":  dataPregCat,
+						]
 				};
 
-	console.log(outJSON);
+	console.log(outJSON); // IT IS FULL OF GOOD STUFF
 	outJSON = Object.assign({}, outJSON);
 	return outJSON;
 }
@@ -80,9 +103,10 @@ async function finaliseResults() {
 
    // Get the Array provided by createFinalOutput, provide the WikiData identifier
    let finalJSON = createJSONOutput(await input);
-   finalJSON = JSON.stringify(finalJSON, undefined, 2);
+   console.log(await finalJSON);
+   //finalJSON = JSON.stringify(finalJSON, undefined, 2);
    // Wait for the Promise to be resolved and then return it
-   console.log(await finalJSON)
+   console.log(await finalJSON); 				//FULL OF SZYMON'S SOUL
    return finalJSON;
 }
 
@@ -103,3 +127,5 @@ feedToHTML();
 // }
 
 // testingArea();
+
+createTree();
