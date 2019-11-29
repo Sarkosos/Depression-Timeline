@@ -1,23 +1,48 @@
-/*  Goal: Adapatation of a query written embedded in HTML
+/*  
  *  
  *  This JavaScript file does:
- *  Grabs the provided drug name
- *  Parses out the name 
- *  Queries WikiData for ID of the supplied drug
- *       >WikiData indentifier of the DataBase passed to getID('string') determines which is the source
- *        database
- *  Parses out the ID from JSON file
- *  Returns the ID
+ *  Contains a set of functions divided into 2 groups
+ *      WikiData queries
+ *          Typically take a wikidata identifier of a drug as an argument
+ *          Return an array of results: minimal lenght 0
+ *          List:     
+ *               queryForLD
+ *               queryForChemicalStructure
+ *               queryForPrimePharm
+ *               queryForDrugInteraction
+ *               queryForArticles
+ *               queryForPregnancyCategory
+ *               queryForID    
+ *          Exeptions
+ *               queryForID 
+ *                    Takes as an argument a type of ID required 
+ *                    Returns an url that is then fed to accessory function getID
+ *      Acessory functions
+ *          Various functionality that is needed for the running of the code
+ *          Returns are individual
+ *          List:
+ *              parseURL
+ *                  No argument, takes the user's DRUG NAME input from URL
+ *                  Feeds a dirty user's imput as an argument to function clean
+ *                  Returns a cleaned variable
+ *              clean
+ *                  Takes a string argument
+ *                  Returns trimmed and low-caseed argument
+ *              getChoiceArray
+ *                  Takes no argument, takes the user's CHOICE OF RESULTS TO BE DISPLAYED input from URL
+ *                  Cleans the input using clean function
+ *                  Returns an array of booleans, TRUE (to be displayed) or FALSE (not to be displayed)
+ *              getID
+ *                  Takes URL as an argument (from queryForID)
+ *                  Returns a Wiki-Data identifier of the drug requested in the queryForID
  *  
-
-
-
-
- * 
+ *
+ * This file does nothing on it's own! It only contains functions, that need to be called!
  */
 
+// ACCESSORY FUNCTIONS
+
 function parseURL() {
-  
   //Grab the URLs
   const drugSubDirt = new URLSearchParams(window.location.search);
 
@@ -35,7 +60,6 @@ function clean (str){
 }
 
 function getChoiceArray() {
-  
   let arraySubClean = [];
   const arraySubDirt = new URLSearchParams(window.location.search);
 
@@ -44,25 +68,6 @@ function getChoiceArray() {
   }
   return arraySubClean;
 }
-
-function queryForID(idIdentifier) {
-
-  query = `							
-  SELECT DISTINCT ?drug ?drugLabel ?ID
-  WHERE
-  {
-    VALUES ?idProp { wdt:${idIdentifier} }
-    ?drug wdt:P31* wd:Q12140 .
-    ?drug ?idProp ?ID . 
-
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-  }
-`                                                                //end of query
-
- const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice
- return url;
-}
-
 
 async function getID (url) {
   const response = await fetch(url)					                  //sends querry (in string) to webservice
@@ -83,6 +88,27 @@ async function getID (url) {
   return output;
 
 }
+
+// QUERY FUNCTIONS
+
+function queryForID(idIdentifier) {
+
+  query = `             
+  SELECT DISTINCT ?drug ?drugLabel ?ID
+  WHERE
+  {
+    VALUES ?idProp { wdt:${idIdentifier} }
+    ?drug wdt:P31* wd:Q12140 .
+    ?drug ?idProp ?ID . 
+
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+  }
+`                                                                //end of query
+
+ const url = wdk.sparqlQuery(query)                          //preparing to send querry to webservice
+ return url;
+}
+
 
 async function queryForLD(idIdentifier) { //only works for aspirin and fentanyl
 
@@ -120,7 +146,6 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
   }
   return ld;
 }
-
 
 
 
@@ -162,7 +187,6 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
 }
 
 
-
 async function queryForPrimePharm(idIdentifier) { 
   query = 						
 `							
@@ -200,8 +224,6 @@ OPTIONAL{?drug wdt:P2175 ?pph}
 }
 
 
-
-// main(queryForID(P592))
 async function queryForDrugInteraction(idIdentifier) {
 
   query = 						
@@ -240,7 +262,6 @@ OPTIONAL{?drug wdt:P769 ?sdi}
   }
   return drugInteraction;
 }
-
 
 
 async function queryForArticles(idIdentifier) { 
@@ -286,7 +307,6 @@ WHERE {
   }
   return articles;
 }
-
 
 
 async function queryForPregnancyCategory(idIdentifier) { 
