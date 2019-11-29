@@ -214,23 +214,26 @@ OPTIONAL{?drug wdt:P3489 ?pc}
 
   // let drugUser = parseURL();
   // let pregnancyCategory = []                             
-      
+  console.log (simpleResults);
   return simpleResults;
 }
 
 
-async function composeJSON(){
+async function composeJSONAlternatively(idIdentifier){
   let valArray = getChoiceArray();
 
   let mySonJson = {};
 
   // mySonJson = $.extend(true, queryForLDAlternative, queryForChemicalStructureAlternative);
 
+  (valArray[0]) ? $.extend(true, mySonJson, await queryForLDAlternative(idIdentifier)): null;
+  (valArray[1]) ? $.extend(true, mySonJson, await queryForChemicalStructureAlternative(idIdentifier)): null;
+  (valArray[2]) ? $.extend(true, mySonJson, await queryForPrimePharmAlternative(idIdentifier)): null;
+  (valArray[3]) ? $.extend(true, mySonJson, await queryForDrugInteractionAlternative(idIdentifier)): null;
+  (valArray[4]) ? $.extend(true, mySonJson, await queryForArticlesAlternative(idIdentifier)): null;
+  (valArray[5]) ? $.extend(true, mySonJson, await queryForPregnancyCategoryAlternative(idIdentifier)): null;
 
-
-
-  (valArray[i]) ? $.extend(true, mySonJson, queryForLDAlternative());
-  (valArray[i]) ? $.extend(true, mySonJson, )
-
-  $.extend()
+  // $.extend()
+  console.log(JSON.stringify(mySonJson));
+  return mySonJson;
 }

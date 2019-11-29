@@ -30,6 +30,9 @@
 			background-color: #208DED;
 		}
 	</style>
+	<!-- Include JQuery for JSON Merging -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 	<!-- Initialize a global WBK function -->
     <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikibase-sdk.min.js"></script>
     <!-- Initialize a global wdk object using the WBK object -->
@@ -41,12 +44,13 @@
 	<script src = "queryForPubChemID.js" type="text/javascript"></script>	
 	<script src = "queryForChemblID.js" type="text/javascript"></script> 
 	-->
+    <script src="queryAlternative.js"type="text/javascript"></script>
+
 	<script src = "queryForID.js" 	type="text/javascript"></script> <!-- This is a Function-Full script, that is reqyired for
 	
 																		  the main.js to work -->
 	<article id="output">
 
-		<script src="timingForPreloader" type="text/javascript"></script>
 		<embed id="preloader">
 			<img src ="loadingBookGif.gif" class="center" >
 		</embed>

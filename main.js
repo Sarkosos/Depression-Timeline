@@ -42,19 +42,23 @@ async function createJSONOutput(idIdentifier){
 	let outJSON = {}; 
 
 	// Assign values returned from queries to 'data' variables
+	// Change the output into a JSON
 	// Take into consideration whether the user wanted this information
 	// If the information is not wanted, in place of a result return 0;
-    dataLD 		= (valArray[0]) ? await queryForLD(idIdentifier): 0;
-    dataChemStr = (valArray[1]) ? await queryForChemicalStructure(idIdentifier): 0;
-    dataPrimPha = (valArray[2]) ? await queryForPrimePharm(idIdentifier): 0;
-    dataDrugInt = (valArray[2]) ? await queryForDrugInteraction(idIdentifier): 0;
-    dataArticle = (valArray[4]) ? await queryForArticles(idIdentifier): 0;
-    dataPregCat = (valArray[5]) ? await queryForPregnancyCategory(idIdentifier): 0;
+	
+    dataLD 		= Object.assign({}, (valArray[0]) ? await queryForLD(idIdentifier): 0);
+    dataChemStr = Object.assign({}, (valArray[1]) ? await queryForChemicalStructure(idIdentifier): 0);
+    dataPrimPha = Object.assign({}, (valArray[2]) ? await queryForPrimePharm(idIdentifier): 0);
+    dataDrugInt = Object.assign({}, (valArray[2]) ? await queryForDrugInteraction(idIdentifier): 0);
+    dataArticle = Object.assign({}, (valArray[4]) ? await queryForArticles(idIdentifier): 0);
+    dataPregCat = Object.assign({}, (valArray[5]) ? await queryForPregnancyCategory(idIdentifier): 0);
 
+    name = parseURL(); 
 
 	// Assign data resulting from queries into a JSON variable
-	outJSON =  
-						{
+	outJSON =   {
+				"Drug Name": name, 
+				"Attributes":{
 						"LD50"   :  dataLD, 
 						"ChemStr":  dataChemStr,
 						"PrimPha":  dataPrimPha,
@@ -62,7 +66,7 @@ async function createJSONOutput(idIdentifier){
 						"Article":  dataArticle,
 						"PregCat":  dataPregCat,
 						}
-				 ;
+				};
 
 	console.log(outJSON)	 
 	return outJSON;
@@ -77,13 +81,23 @@ async function finaliseResults() {
    let finalJSON = createJSONOutput(await input);
 
    // Wait for the Promise to be resolved and then return it
+   console.log(await finalJSON)
    return finalJSON;
 }
 
+
 async function feedToHTML(){
 	data = await finaliseResults();
-	txt = JSON.stringify(data, undefined, 2);
+	txt  = JSON.stringify(data, undefined, 2);
 	document.getElementById('output').innerHTML = '<pre>' + txt + '</pre>';
 }
 
 feedToHTML();
+
+// TESTING AREA
+// async function testingArea() {
+// 	composeJSONAlternatively(getID(queryForID('P592')));
+
+// }
+
+// testingArea();
