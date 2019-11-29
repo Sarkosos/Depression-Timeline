@@ -29,6 +29,24 @@
 		{
 			background-color: #208DED;
 		}
+		.node rect {
+			cursor: pointer;
+			fill: #fff;
+			fill-opacity: 0.5;
+			stroke: #3182bd;
+			stroke-width: 1.5px;
+			}
+
+		.node text {
+			font: 10px sans-serif;
+			pointer-events: none;
+			}
+
+		.link {
+			fill: none;
+			stroke: #9ecae1;
+			stroke-width: 1.5px;
+			}
 	</style>
 	<!-- Include JQuery for JSON Merging -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -37,6 +55,7 @@
     <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikibase-sdk.min.js"></script>
     <!-- Initialize a global wdk object using the WBK object -->
     <script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikidata-sdk.min.js"></script>
+	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 </head>
 <body>
 
@@ -49,12 +68,16 @@
 	<script src = "queryForID.js" 	type="text/javascript"></script> <!-- This is a Function-Full script, that is reqyired for
 	
 																		  the main.js to work -->
+	
+
 	<article id="output">
+
 
 		<embed id="preloader">
 			<img src ="loadingBookGif.gif" class="center" >
 		</embed>
 	</article>
 	<script src = "main.js" 		type="text/javascript"></script>
+	<script src = "tree.js" 	type="text/javascript"></script>
 </body>
 </html>

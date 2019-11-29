@@ -48,7 +48,6 @@ function parseURL() {
 
   //Create a clean variable
   return drugSubClean = clean(drugSubDirt.get('drug'));
-  console.log(drugSubClean);
 }
 
 //Cleanup function
@@ -144,6 +143,7 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
       ld[i] =  simpleResults[i].ld;
      
   }
+ ld = Object.assign({},ld);
   return ld;
 }
 
@@ -183,6 +183,8 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
   for (i=0; i<simpleResults.length; i++){
       chemicalStructure[i] = simpleResults[i].chemStruct;
      }
+      chemicalStructure = Object.assign({},chemicalStructure);
+
   return chemicalStructure;
 }
 
@@ -220,6 +222,8 @@ OPTIONAL{?drug wdt:P2175 ?pph}
     
        pph[i] = [simpleResults[i].pphLabel];
   }
+   pph = Object.assign({},pph);
+
  return pph;
 }
 
@@ -260,6 +264,8 @@ OPTIONAL{?drug wdt:P769 ?sdi}
       drugInteraction[i] = simpleResults[i].sdiLabel;
   
   }
+   drugInteraction = Object.assign({},drugInteraction);
+
   return drugInteraction;
 }
 
@@ -305,6 +311,8 @@ WHERE {
       
      articles[i] = simpleResults[i].msLabel;
   }
+   articles = Object.assign({},articles);
+
   return articles;
 }
 
@@ -345,6 +353,8 @@ OPTIONAL{?drug wdt:P3489 ?pc}
       
      pregnancyCategory[i] = simpleResults[i].pcLabel;
   }
+   pregnancyCategory = Object.assign({},pregnancyCategory);
+
   return pregnancyCategory;
 }
 
