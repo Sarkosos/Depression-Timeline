@@ -64,7 +64,8 @@ async function createJSONOutput(idIdentifier){
 						}
 				 ;
 
-	console.log(outJSON)	 
+	console.log(outJSON);
+	outJSON = Object.assign({}, outJSON);
 	return outJSON;
 }
 
@@ -75,15 +76,15 @@ async function finaliseResults() {
 
    // Get the Array provided by createFinalOutput, provide the WikiData identifier
    let finalJSON = createJSONOutput(await input);
-
+   finalJSON = JSON.stringify(finalJSON, undefined, 2);
    // Wait for the Promise to be resolved and then return it
    return finalJSON;
 }
 
 async function feedToHTML(){
 	data = await finaliseResults();
-	txt = JSON.stringify(data, undefined, 2);
-	document.getElementById('output').innerHTML = '<pre>' + txt + '</pre>';
+	// txt = JSON.stringify(data, undefined, 2);
+	document.getElementById('output').innerHTML = '<pre>' + data + '</pre>';
 }
 
 feedToHTML();
