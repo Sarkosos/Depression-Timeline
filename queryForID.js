@@ -137,16 +137,34 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
 
   let drugUser = parseURL();
   var ld = {};                               
-      
-  for (i=0; i<simpleResults.length; i++){
-    
-    ld = Object.assign({}, ld, {"name" : simpleResults[i].ld} );
-      // ld = ld.concat({"name" : simpleResults[i].ld});
-     
-  }
-  console.log(ld);
+  // let StrongestString = '{ ';    
+  let StrongestString = `{
+            "name"     : "LD50",
+            "children"   : [  
+            `;
 
-  // ld = Object.assign({},ld);
+  for (i=0; i<simpleResults.length; i++){
+    StrongestString += `{"name" : ${simpleResults[i].ld}}, `;
+    console.log('Let me see soomething')     
+  }
+  StrongestString = StrongestString.slice(0, StrongestString.length - 2);
+  StrongestString += `]}`;
+
+  console.log(ld);
+  console.log(StrongestString);
+  ld = JSON.parse(StrongestString);
+  
+
+  // DO NOT DELETE THIS CHUNK! It still may be useful later 
+
+  // for (i = 0; i < counter; i++){
+  //   eval(`
+  //     ld.name = ld.name${i};
+  //     delete ld.name${i};
+  //     `);  
+  // }
+  console.log(ld);
+  
   return ld;
 }
 

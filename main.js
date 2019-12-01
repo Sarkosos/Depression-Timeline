@@ -55,39 +55,44 @@ async function createJSONOutput(idIdentifier){
 
     name = parseURL(); 
 
+    // console.log(dataLD);
+
+    // outJSON =   {
+				// "name": name
+				// };
+
+
+    // var newUser = "children";
+    // var newValue = dataLD;
+    // outJSON[newUser] = newValue ;
+
+    // console.log(outJSON);
+
 	// Assign data resulting from queries into a JSON variable
 	outJSON =   {
-				"Drug Name": name, 
+				"name": name, 
 				"children":	[
+						dataLD,
 						{
-						"Name"		 : "LD50",
-						"children"   : 	dataLD },
-						{
-						"Name"		 : "ChemStr",
+						"name"		 : "ChemStr",
 						"children"   : 	dataChemStr
 						},
 						{
-						"Name"		 :  "PrimPha",
+						"name"		 :  "PrimPha",
 						"children"   : 	dataPrimPha
 					    },
 					    {
-						"Name"		 : "DrugInt",
+						"name"		 : "DrugInt",
 						"children"   : 	dataDrugInt
 						},
 						{	
-						"Name"		 : "Article",
+						"name"		 : "Article",
 						"children"   : 	dataArticle
 						},
 						{
-						"Name"		 : "PregCat",
+						"name"		 : "PregCat",
 						"children"   : 	dataPregCat
 						}
-						// "LD50"   :  dataLD,
-						// "ChemStr":  dataChemStr,
-						// "PrimPha":  dataPrimPha,
-						// "DrugInt":  dataDrugInt,
-						// "Article":  dataArticle,
-						// "PregCat":  dataPregCat,
 						]
 				};
 
