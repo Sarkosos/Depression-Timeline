@@ -144,14 +144,12 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
             `;
 
   for (i=0; i<simpleResults.length; i++){
-    StrongestString += `{"name" : ${simpleResults[i].ld}}, `;
+    StrongestString += `{"name" : "${simpleResults[i].ld}"}, `;
     console.log('Let me see soomething')
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-
-  console.log(ld);
-  console.log(StrongestString);
+  console.log(StrongestString)
   ld = JSON.parse(StrongestString);
 
 
@@ -199,12 +197,21 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
   const simpleResults = wdk.simplify.sparqlResults(results)
 
   let drugUser = parseURL();
-  let chemicalStructure = []
+  var chemicalStructure = {};
+  let StrongestString = `{
+            "name"     : "Chemical Structure",
+            "children"   : [
+            `;
 
   for (i=0; i<simpleResults.length; i++){
-      chemicalStructure[i] = simpleResults[i].chemStruct;
-     }
-      chemicalStructure = Object.assign({},chemicalStructure);
+    StrongestString += `{"name" : "${simpleResults[i].chemStruct}"}, `;
+  }
+  StrongestString = StrongestString.slice(0, StrongestString.length - 2);
+  StrongestString += `]}`;
+
+  console.log(StrongestString);
+
+  chemicalStructure = JSON.parse(StrongestString);
 
   return chemicalStructure;
 }
@@ -238,12 +245,20 @@ OPTIONAL{?drug wdt:P2175 ?pph}
 
   let drugUser = parseURL();
   let pph = [];
+let StrongestString = `{
+            "name"     : "Primary Pharmacology",
+            "children"   : [
+            `;
 
   for (i=0; i<simpleResults.length; i++){
-
-       pph[i] = [simpleResults[i].pphLabel];
+    StrongestString += `{"name" : "${simpleResults[i].pphLabel}"}, `;
   }
-   pph = Object.assign({},pph);
+  StrongestString = StrongestString.slice(0, StrongestString.length - 2);
+  StrongestString += `]}`;
+  console.log(StrongestString);
+
+  pph = JSON.parse(StrongestString);
+
 
  return pph;
 }
@@ -278,14 +293,21 @@ OPTIONAL{?drug wdt:P769 ?sdi}
   const simpleResults = wdk.simplify.sparqlResults(results)
 
   let drugUser = parseURL();
-  let drugInteraction = [];
+  let drugInteraction = {};
+
+  let StrongestString = `{
+            "name"     : "Significant Drug Interaction",
+            "children"   : [
+            `;
 
   for (i=0; i<simpleResults.length; i++){
-
-      drugInteraction[i] = simpleResults[i].sdiLabel;
-
+    StrongestString += `{"name" : "${simpleResults[i].sdiLabel}"}, `;
   }
-   drugInteraction = Object.assign({},drugInteraction);
+  StrongestString = StrongestString.slice(0, StrongestString.length - 2);
+  StrongestString += `]}`;
+  console.log(StrongestString);
+
+  drugInteraction = JSON.parse(StrongestString);
 
   return drugInteraction;
 }
@@ -325,14 +347,29 @@ WHERE {
   const simpleResults = wdk.simplify.sparqlResults(results)
 
   let drugUser = parseURL();
-  let articles = []
+  let articles = {};
+
+    let StrongestString = `{
+            "name"     : "Articles",
+            "children"   : [
+            `;
+  let holdMyString = "";
+
+  var escapedString = "";
+
 
   for (i=0; i<simpleResults.length; i++){
-
-
-     articles[i] = simpleResults[i].msLabel;
+    holdMyString = simpleResults[i].msLabel;
+    // holdMyString = holdMyString.replace(' " ', " ' ");
+    escapedString = holdMyString.replace(/(['"])/g, "");
+    StrongestString += `{"name" : "${escapedString}"}, `;
   }
-   articles = Object.assign({},articles);
+  StrongestString = StrongestString.slice(0, StrongestString.length - 2);
+  StrongestString += `]}`;
+  console.log(StrongestString);
+
+  articles = JSON.parse(StrongestString);
+
 
   return articles;
 }
@@ -367,14 +404,18 @@ OPTIONAL{?drug wdt:P3489 ?pc}
   const simpleResults = wdk.simplify.sparqlResults(results)
 
   let drugUser = parseURL();
-  let pregnancyCategory = []
+     let StrongestString = `{
+            "name"     : "Pregnancy Category",
+            "children"   : [
+            `;
 
   for (i=0; i<simpleResults.length; i++){
-
-
-     pregnancyCategory[i] = simpleResults[i].pcLabel;
+    StrongestString += `{"name" : "${simpleResults[i].pcLabel}"}, `;
   }
-   pregnancyCategory = Object.assign({},pregnancyCategory);
+  StrongestString = StrongestString.slice(0, StrongestString.length - 2);
+  StrongestString += `]}`;
+  console.log(StrongestString);
 
+  pregnancyCategory = JSON.parse(StrongestString);
   return pregnancyCategory;
 }
