@@ -60,26 +60,26 @@ async function createJSONOutput(idIdentifier){
 				"Drug Name": name, 
 				"children":	[
 						{
-						"Name"		 : "LD50",
+						"name"		 : "LD50",
 						"children"   : 	dataLD },
 						{
-						"Name"		 : "ChemStr",
+						"name"		 : "ChemStr",
 						"children"   : 	dataChemStr
 						},
 						{
-						"Name"		 :  "PrimPha",
+						"name"		 :  "PrimPha",
 						"children"   : 	dataPrimPha
 					    },
 					    {
-						"Name"		 : "DrugInt",
+						"name"		 : "DrugInt",
 						"children"   : 	dataDrugInt
 						},
 						{	
-						"Name"		 : "Article",
+						"name"		 : "Article",
 						"children"   : 	dataArticle
 						},
 						{
-						"Name"		 : "PregCat",
+						"name"		 : "PregCat",
 						"children"   : 	dataPregCat
 						}
 						// "LD50"   :  dataLD,

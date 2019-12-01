@@ -136,17 +136,23 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
   const simpleResults = wdk.simplify.sparqlResults(results) 
 
   let drugUser = parseURL();
-  var ld = {};                               
+  var ld =[];  
+  // let myStringIsStrong = '['                             
       
   for (i=0; i<simpleResults.length; i++){
-    
-    ld = Object.assign({}, ld, {"name" : simpleResults[i].ld} );
+    ld[i] = {'name' : simpleResults[i].ld};
+    // myStringIsStrong = `{"name": ${simpleResults[i]}}`
+    // ld = Object.assign({}, ld, {"name" : simpleResults[i].ld} );
       // ld = ld.concat({"name" : simpleResults[i].ld});
-     
+     // ld = JSON.parse (`{ name: simpleResults[i]}`)
   }
-  console.log(ld);
+  // console.log(ld);
+  for(j = 0; j<ld.length; j++){
+    
+  }
+  ld = Object.assign({},ld);
+  // ld = JSON.parse (myStringIsStrong);
 
-  // ld = Object.assign({},ld);
   return ld;
 }
 
