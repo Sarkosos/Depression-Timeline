@@ -68,9 +68,24 @@ function getChoiceArray() {
   return arraySubClean;
 }
 
-async function getID (url) {
-  const response = await fetch(url)					                  //sends querry (in string) to webservice
-  const results  = await response.json()			               	 //gives body of http in json format
+
+
+// QUERY FUNCTIONS
+
+async function queryForID() {
+
+  query = `
+    SELECT DISTINCT ?drug ?drugLabel ?ID
+  WHERE
+  {
+    ?drug wdt:P31* wd:Q12140 .
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+  }
+`                                                                //end of query
+
+ const url = wdk.sparqlQuery(query)                          //preparing to send querry to webservice
+ const response = await fetch(url)                           //sends querry (in string) to webservice
+  const results  = await response.json()                       //gives body of http in json format
 
   const simpleResults = wdk.simplify.sparqlResults(results)
 
@@ -84,24 +99,6 @@ async function getID (url) {
      }
   }
   return output;
-
-}
-
-// QUERY FUNCTIONS
-
-function queryForID() {
-
-  query = `
-    SELECT DISTINCT ?drug ?drugLabel ?ID
-  WHERE
-  {
-    ?drug wdt:P31* wd:Q12140 .
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-  }
-`                                                                //end of query
-
- const url = wdk.sparqlQuery(query)                          //preparing to send querry to webservice
- return url;
 }
 
 

@@ -88,7 +88,7 @@ async function createJSONOutput(idIdentifier){
 // Construct the final array
 async function finaliseResults() {
    // Retrieve a WikiData-useful identifier of the drug provided
-   var input = getID(queryForID()); // TO DO: combine the 2 functions
+   var input = queryForID(); // TO DO: combine the 2 functions
 
    // Get the Array provided by createFinalOutput, provide the WikiData identifier
    let finalJSON = createJSONOutput(await input);
