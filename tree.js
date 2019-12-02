@@ -25,7 +25,6 @@ var svg = d3.select("body").append("svg")
     .attr("width", width) // + margin.left + margin.right)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-console.log('report1');
 
   root = d3.hierarchy(output);
   console.log(root);
@@ -34,7 +33,6 @@ console.log('report1');
   update(root);
 
 function update(source) {
-  console.log('report2');
   // Compute the flattened node list.
   var nodes = root.descendants();
 
@@ -134,7 +132,6 @@ function update(source) {
 
 // Toggle children on click.
 function click(d) {
-  console.log('report3');
   if (d.children) {
     d._children = d.children;
     d.children = null;

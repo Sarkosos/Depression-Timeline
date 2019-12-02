@@ -3,18 +3,15 @@
   that can be queried by this programme
 
 */
-
+//TODO update this method
 
 query = `							
-SELECT DISTINCT ?drug ?drugLabel ?ID
-WHERE
-{
-  VALUES ?idProp { wdt:P662 }
-  ?drug wdt:P31* wd:Q12140 .
-  ?drug ?idProp ?ID . 
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}
+  SELECT DISTINCT ?drug ?drugLabel ?ID
+  WHERE
+  {
+    ?drug wdt:P31* wd:Q12140 .
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+  }
 `                                                                //end of query
    
 const url = wdk.sparqlQuery(query)					                 //preparing to send querry to webservice

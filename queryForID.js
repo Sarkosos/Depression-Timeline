@@ -54,7 +54,7 @@ function parseURL() {
 function clean (str){
   if(!str) return null
 
-  let temp = str.trim()
+  let temp = str.trim() //Look up what does
   return temp.toLowerCase();
 }
 
@@ -79,8 +79,7 @@ async function getID (url) {
 
   for (i=0; i<simpleResults.length; i++){
     if (simpleResults[i].drug.label === drugUser){
-      // console.log(simpleResults[i].drug.value);
-      // return simpleResults[i].ID;
+
       output = simpleResults[i].drug.value;
      }
   }
@@ -90,16 +89,13 @@ async function getID (url) {
 
 // QUERY FUNCTIONS
 
-function queryForID(idIdentifier) {
+function queryForID() {
 
   query = `
-  SELECT DISTINCT ?drug ?drugLabel ?ID
+    SELECT DISTINCT ?drug ?drugLabel ?ID
   WHERE
   {
-    VALUES ?idProp { wdt:${idIdentifier} }
     ?drug wdt:P31* wd:Q12140 .
-    ?drug ?idProp ?ID .
-
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
   }
 `                                                                //end of query
@@ -135,7 +131,6 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
 
   const simpleResults = wdk.simplify.sparqlResults(results)
 
-  let drugUser = parseURL();
   var ld = {};
   // let StrongestString = '{ ';
   let StrongestString = `{
@@ -145,11 +140,9 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
 
   for (i=0; i<simpleResults.length; i++){
     StrongestString += `{"name" : "${simpleResults[i].ld}"}, `;
-    console.log('Let me see soomething')
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-  console.log(StrongestString)
   ld = JSON.parse(StrongestString);
 
 
@@ -161,7 +154,6 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
   //     delete ld.name${i};
   //     `);
   // }
-  console.log(ld);
 
   return ld;
 }
@@ -196,7 +188,6 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
 
   const simpleResults = wdk.simplify.sparqlResults(results)
 
-  let drugUser = parseURL();
   var chemicalStructure = {};
   let StrongestString = `{
             "name"     : "Chemical Structure",
@@ -243,7 +234,6 @@ OPTIONAL{?drug wdt:P2175 ?pph}
 
   const simpleResults = wdk.simplify.sparqlResults(results)
 
-  let drugUser = parseURL();
   let pph = [];
 let StrongestString = `{
             "name"     : "Primary Pharmacology",
@@ -292,7 +282,6 @@ OPTIONAL{?drug wdt:P769 ?sdi}
 
   const simpleResults = wdk.simplify.sparqlResults(results)
 
-  let drugUser = parseURL();
   let drugInteraction = {};
 
   let StrongestString = `{
@@ -346,7 +335,6 @@ WHERE {
 
   const simpleResults = wdk.simplify.sparqlResults(results)
 
-  let drugUser = parseURL();
   let articles = {};
 
     let StrongestString = `{
@@ -355,14 +343,13 @@ WHERE {
             `;
   let holdMyString = "";
 
-  var escapedString = "";
 
 
   for (i=0; i<simpleResults.length; i++){
     holdMyString = simpleResults[i].msLabel;
     // holdMyString = holdMyString.replace(' " ', " ' ");
-    escapedString = holdMyString.replace(/(['"])/g, "");
-    StrongestString += `{"name" : "${escapedString}"}, `;
+    holdMyString = holdMyString.replace(/([`'"])/g, "");
+    StrongestString += `{"name" : "${holdMyString}"}, `; 
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
@@ -403,7 +390,6 @@ OPTIONAL{?drug wdt:P3489 ?pc}
 
   const simpleResults = wdk.simplify.sparqlResults(results)
 
-  let drugUser = parseURL();
      let StrongestString = `{
             "name"     : "Pregnancy Category",
             "children"   : [
