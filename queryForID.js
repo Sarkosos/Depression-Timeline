@@ -1,10 +1,10 @@
-/*
+/*  
  *
  *  This JavaScript file does:
  *  Contains a set of functions divided into 2 groups
  *      WikiData queries
  *          Typically take a wikidata identifier of a drug as an argument
- *          Return an array of results: minimal lenght 0
+ *          Return a structured JSON output containing the results
  *          List:
  *               queryForLD
  *               queryForChemicalStructure
@@ -15,8 +15,8 @@
  *               queryForID
  *          Exeptions
  *               queryForID
- *                    Takes as an argument a type of ID required
- *                    Returns an url that is then fed to accessory function getID
+ *                    Takes no argument
+ *                    Returns WikiData identifier of the drug user put in
  *      Acessory functions
  *          Various functionality that is needed for the running of the code
  *          Returns are individual
@@ -32,9 +32,7 @@
  *                  Takes no argument, takes the user's CHOICE OF RESULTS TO BE DISPLAYED input from URL
  *                  Cleans the input using clean function
  *                  Returns an array of booleans, TRUE (to be displayed) or FALSE (not to be displayed)
- *              getID
- *                  Takes URL as an argument (from queryForID)
- *                  Returns a Wiki-Data identifier of the drug requested in the queryForID
+ *              
  *
  *
  * This file does nothing on it's own! It only contains functions, that need to be called!
@@ -54,16 +52,16 @@ function parseURL() {
 function clean (str){
   if(!str) return null
 
-  let temp = str.trim() //Look up what does
-  return temp.toLowerCase();
+  let temp = str.trim(); // Remove whitespace from both sides of a string
+  return temp.toLowerCase(); // Puts everything to lower case
 }
-
+// Returns which data points the user wants (See checkboxes)
 function getChoiceArray() {
-  let arraySubClean = [];
+  let arraySubClean = [false, false, false, false, false];
   const arraySubDirt = new URLSearchParams(window.location.search);
 
-  for (cnt = 0; cnt < 6; cnt++)  {
-    arraySubClean[cnt] = clean(arraySubDirt.get(`chbx${cnt}`));
+  for (i = 0; i < 6; i++)  {
+    arraySubClean[i] = clean(arraySubDirt.get(`chbx${i}`));
   }
   return arraySubClean;
 }
@@ -89,16 +87,16 @@ async function queryForID() {
 
   const simpleResults = wdk.simplify.sparqlResults(results)
 
-  var drugUser = parseURL();
+  var drugUser = parseURL(); //Extracts user drug
   var output;
 
   for (i=0; i<simpleResults.length; i++){
-    if (simpleResults[i].drug.label === drugUser){
+    if (simpleResults[i].drug.label === drugUser){ // Searches for the users drug in wikidata
 
       output = simpleResults[i].drug.value;
      }
   }
-  return output;
+  return output; //Returns the WikiData ID of the users drug so we can perform queries
 }
 
 
@@ -106,12 +104,16 @@ async function queryForLD(idIdentifier) { //only works for aspirin and fentanyl
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?ld
+SELECT DISTINCT ?drug ?drugLabel ?ID ?ld
 
 WHERE {
-   VALUES ?drug { wd:${idIdentifier}  }
+   VALUES ?idProp { wdt:P662 }
+   VALUES ?drug { wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
 OPTIONAL{ ?drug wdt:P2240 ?ld}
+
+
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
@@ -125,30 +127,31 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
   const simpleResults = wdk.simplify.sparqlResults(results)
 
   var ld = {};
-  // let StrongestString = '{ ';
+  // The code below is responsible for creating a structured JSON the structure looks as follows:
+  // "name": "aspartame",
+  // "children": [
+  //   {
+  //     "name": "LD50",
+  //     "children": [
+  //       {
+  //         "name": "undefined"
+  //       }
+  //     ]
+  //   },
+  // The code operates by creating a string with a JSON format and then casting
+  // it into a JSON using JSON.parse
   let StrongestString = `{
             "name"     : "LD50",
             "children"   : [
             `;
-  //add from simple results to the string
+
   for (i=0; i<simpleResults.length; i++){
     StrongestString += `{"name" : "${simpleResults[i].ld}"}, `;
   }
-
-  //get rid of last comma & add closed bracket.
+  // This line is here to delete the last comma in the string
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
   ld = JSON.parse(StrongestString);
-
-
-  // DO NOT DELETE THIS CHUNK! It still may be useful later
-
-  // for (i = 0; i < counter; i++){
-  //   eval(`
-  //     ld.name = ld.name${i};
-  //     delete ld.name${i};
-  //     `);
-  // }
 
   return ld;
 }
@@ -159,13 +162,17 @@ async function queryForChemicalStructure(idIdentifier) {
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?chemStruct
+SELECT DISTINCT ?drug ?drugLabel ?ID ?chemStruct
 
 WHERE {
+   VALUES ?idProp { wdt:P662 }
    VALUES ?drug { wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
 
 OPTIONAL{?drug wdt:P117 ?chemStruct}
+
+
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
@@ -191,8 +198,6 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
 
-  console.log(StrongestString);
-
   chemicalStructure = JSON.parse(StrongestString);
 
   return chemicalStructure;
@@ -202,13 +207,17 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
 async function queryForPrimePharm(idIdentifier) {
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?pphLabel
+SELECT DISTINCT ?drug ?drugLabel ?ID ?pphLabel
 
 WHERE {
+   VALUES ?idProp { wdt:P662 }
    VALUES ?drug {wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+
 
 OPTIONAL{?drug wdt:P2175 ?pph}
+
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
@@ -232,7 +241,6 @@ let StrongestString = `{
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-  console.log(StrongestString);
 
   pph = JSON.parse(StrongestString);
 
@@ -245,13 +253,18 @@ async function queryForDrugInteraction(idIdentifier) {
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?sdiLabel
+SELECT DISTINCT ?drug ?drugLabel ?ID ?sdiLabel
 
 WHERE {
-  VALUES ?drug { wd:${idIdentifier} }
+   VALUES ?idProp { wdt:P662 }
+   VALUES ?drug { wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+
 
 OPTIONAL{?drug wdt:P769 ?sdi}
+
+
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
@@ -276,7 +289,6 @@ OPTIONAL{?drug wdt:P769 ?sdi}
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-  console.log(StrongestString);
 
   drugInteraction = JSON.parse(StrongestString);
 
@@ -288,12 +300,24 @@ async function queryForArticles(idIdentifier) {
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?msLabel
+SELECT DISTINCT ?drug ?drugLabel ?ID ?msLabel
+WITH
+{
+SELECT DISTINCT ?drug ?ID
 WHERE {
-  VALUES ?drug { wd:${idIdentifier}}
+  VALUES ?idProp { wdt:P662 }
+  VALUES ?drug { wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+} LIMIT 1000
+} AS %RESULTS WITH {
+  SELECT DISTINCT ?drug ?ID ?ms
+  WHERE {
+    INCLUDE %RESULTS
     ?ms wdt:P921 ?drug
-
+  }
+} AS %ARTICLES {
+  INCLUDE %ARTICLES
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
 `                                                                //end of query                                                            //end of query
@@ -317,13 +341,13 @@ WHERE {
 
   for (i=0; i<simpleResults.length; i++){
     holdMyString = simpleResults[i].msLabel;
-    // holdMyString = holdMyString.replace(' " ', " ' ");
-    holdMyString = holdMyString.replace(/([`'"])/g, "");
-    StrongestString += `{"name" : "${holdMyString}"}, `;
+    holdMyString = holdMyString.replace(/([`'"])/g, ""); // Some paper titles had
+    // quotation marks or apostrophes which broke the string thus we had to delete
+    //those which this method does
+    StrongestString += `{"name" : "${holdMyString}"}, `; 
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-  console.log(StrongestString);
 
   articles = JSON.parse(StrongestString);
 
@@ -336,13 +360,18 @@ async function queryForPregnancyCategory(idIdentifier) {
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?pcLabel
+SELECT DISTINCT ?drug ?drugLabel ?ID ?pcLabel
 
 WHERE {
+   VALUES ?idProp { wdt:P662 }
    VALUES ?drug { wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
+  ?drug ?idProp ?ID .
+
 
 OPTIONAL{?drug wdt:P3489 ?pc}
+
+
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
@@ -365,7 +394,6 @@ OPTIONAL{?drug wdt:P3489 ?pc}
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-  console.log(StrongestString);
 
   pregnancyCategory = JSON.parse(StrongestString);
   return pregnancyCategory;
