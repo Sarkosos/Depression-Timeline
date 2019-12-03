@@ -57,7 +57,7 @@ function clean (str){
 }
 // Returns which data points the user wants (See checkboxes)
 function getChoiceArray() {
-  let arraySubClean = [];
+  let arraySubClean = [false, false, false, false, false];
   const arraySubDirt = new URLSearchParams(window.location.search);
 
   for (i = 0; i < 6; i++)  {

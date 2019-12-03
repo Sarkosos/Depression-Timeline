@@ -46,7 +46,7 @@ async function createJSONOutput(idIdentifier){
     dataLD 		= Object.assign({}, (valArray[0]) ? await queryForLD(idIdentifier): 0);
     dataChemStr = Object.assign({}, (valArray[1]) ? await queryForChemicalStructure(idIdentifier): 0);
     dataPrimPha = Object.assign({}, (valArray[2]) ? await queryForPrimePharm(idIdentifier): 0);
-    dataDrugInt = Object.assign({}, (valArray[2]) ? await queryForDrugInteraction(idIdentifier): 0);
+    dataDrugInt = Object.assign({}, (valArray[3]) ? await queryForDrugInteraction(idIdentifier): 0);
     dataArticle = Object.assign({}, (valArray[4]) ? await queryForArticles(idIdentifier): 0);
     dataPregCat = Object.assign({}, (valArray[5]) ? await queryForPregnancyCategory(idIdentifier): 0);
 
