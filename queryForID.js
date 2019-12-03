@@ -210,8 +210,6 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
 
-  console.log(StrongestString);
-
   chemicalStructure = JSON.parse(StrongestString);
 
   return chemicalStructure;
@@ -255,7 +253,6 @@ let StrongestString = `{
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-  console.log(StrongestString);
 
   pph = JSON.parse(StrongestString);
 
@@ -304,7 +301,6 @@ OPTIONAL{?drug wdt:P769 ?sdi}
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-  console.log(StrongestString);
 
   drugInteraction = JSON.parse(StrongestString);
 
@@ -364,7 +360,6 @@ WHERE {
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-  console.log(StrongestString);
 
   articles = JSON.parse(StrongestString);
 
@@ -411,7 +406,6 @@ OPTIONAL{?drug wdt:P3489 ?pc}
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
-  console.log(StrongestString);
 
   pregnancyCategory = JSON.parse(StrongestString);
   return pregnancyCategory;

@@ -27,7 +27,7 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   root = d3.hierarchy(output);
-  console.log(root);
+  // console.log(root);
   root.x0 = 0;
   root.y0 = 0;
   update(root);

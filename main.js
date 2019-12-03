@@ -55,19 +55,6 @@ async function createJSONOutput(idIdentifier){
 
     name = parseURL();
 
-    // console.log(dataLD);
-
-    // outJSON =   {
-				// "name": name
-				// };
-
-
-    // var newUser = "children";
-    // var newValue = dataLD;
-    // outJSON[newUser] = newValue ;
-
-    // console.log(outJSON);
-
 	// Assign data resulting from queries into a JSON variable
 	// TODO make so that it interacts with checkboxes
 	outJSON =   {
@@ -92,10 +79,9 @@ async function finaliseResults() {
 
    // Get the Array provided by createFinalOutput, provide the WikiData identifier
    let finalJSON = createJSONOutput(await input);
-   console.log(await finalJSON);
-   //finalJSON = JSON.stringify(finalJSON, undefined, 2);
+   
+
    // Wait for the Promise to be resolved and then return it
-   console.log(await finalJSON); 				//FULL OF SZYMON'S SOUL
    return finalJSON;
 }
 
@@ -104,17 +90,10 @@ async function feedToHTML(){
 	data = await finaliseResults();
 
 	txt  = JSON.stringify(data, undefined, 2);
-	document.getElementById('output').innerHTML = '<pre>' + txt + '</pre>';
+
+	document.getElementById('output').innerHTML = '<div color="#208DED"><pre> </pre><div>';
 }
 
 feedToHTML();
-
-// TESTING AREA
-// async function testingArea() {
-// 	composeJSONAlternatively(getID(queryForID('P592')));
-
-// }
-
-// testingArea();
 
 createTree();
