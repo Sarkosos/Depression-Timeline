@@ -1,4 +1,4 @@
-/*  
+/*
  *
  *  This JavaScript file does:
  *  Contains a set of functions divided into 2 groups
@@ -32,7 +32,7 @@
  *                  Takes no argument, takes the user's CHOICE OF RESULTS TO BE DISPLAYED input from URL
  *                  Cleans the input using clean function
  *                  Returns an array of booleans, TRUE (to be displayed) or FALSE (not to be displayed)
- *              
+ *
  *
  *
  * This file does nothing on it's own! It only contains functions, that need to be called!
@@ -104,16 +104,12 @@ async function queryForLD(idIdentifier) { //only works for aspirin and fentanyl
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?ID ?ld
+SELECT DISTINCT ?drug ?drugLabel  ?ld
 
 WHERE {
-   VALUES ?idProp { wdt:P662 }
    VALUES ?drug { wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
-  ?drug ?idProp ?ID .
 OPTIONAL{ ?drug wdt:P2240 ?ld}
-
-
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
@@ -162,17 +158,13 @@ async function queryForChemicalStructure(idIdentifier) {
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?ID ?chemStruct
+SELECT DISTINCT ?drug ?drugLabel ?chemStruct
 
 WHERE {
-   VALUES ?idProp { wdt:P662 }
    VALUES ?drug { wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
-  ?drug ?idProp ?ID .
 
 OPTIONAL{?drug wdt:P117 ?chemStruct}
-
-
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
@@ -207,17 +199,13 @@ OPTIONAL{?drug wdt:P117 ?chemStruct}
 async function queryForPrimePharm(idIdentifier) {
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?ID ?pphLabel
+SELECT DISTINCT ?drug ?drugLabel ?pphLabel
 
 WHERE {
-   VALUES ?idProp { wdt:P662 }
    VALUES ?drug {wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
-  ?drug ?idProp ?ID .
-
 
 OPTIONAL{?drug wdt:P2175 ?pph}
-
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
@@ -253,14 +241,11 @@ async function queryForDrugInteraction(idIdentifier) {
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?ID ?sdiLabel
+SELECT DISTINCT ?drug ?drugLabel ?sdiLabel
 
 WHERE {
-   VALUES ?idProp { wdt:P662 }
    VALUES ?drug { wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
-  ?drug ?idProp ?ID .
-
 
 OPTIONAL{?drug wdt:P769 ?sdi}
 
@@ -300,24 +285,12 @@ async function queryForArticles(idIdentifier) {
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?ID ?msLabel
-WITH
-{
-SELECT DISTINCT ?drug ?ID
+SELECT DISTINCT ?drug ?drugLabel ?msLabel
 WHERE {
-  VALUES ?idProp { wdt:P662 }
-  VALUES ?drug { wd:${idIdentifier} }
+  VALUES ?drug { wd:${idIdentifier}}
   ?drug wdt:P31* wd:Q12140 .
-  ?drug ?idProp ?ID .
-} LIMIT 1000
-} AS %RESULTS WITH {
-  SELECT DISTINCT ?drug ?ID ?ms
-  WHERE {
-    INCLUDE %RESULTS
     ?ms wdt:P921 ?drug
-  }
-} AS %ARTICLES {
-  INCLUDE %ARTICLES
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
 `                                                                //end of query                                                            //end of query
@@ -344,7 +317,7 @@ WHERE {
     holdMyString = holdMyString.replace(/([`'"])/g, ""); // Some paper titles had
     // quotation marks or apostrophes which broke the string thus we had to delete
     //those which this method does
-    StrongestString += `{"name" : "${holdMyString}"}, `; 
+    StrongestString += `{"name" : "${holdMyString}"}, `;
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
@@ -360,18 +333,13 @@ async function queryForPregnancyCategory(idIdentifier) {
 
   query =
 `
-SELECT DISTINCT ?drug ?drugLabel ?ID ?pcLabel
+SELECT DISTINCT ?drug ?drugLabel ?pcLabel
 
 WHERE {
-   VALUES ?idProp { wdt:P662 }
    VALUES ?drug { wd:${idIdentifier} }
   ?drug wdt:P31* wd:Q12140 .
-  ?drug ?idProp ?ID .
-
 
 OPTIONAL{?drug wdt:P3489 ?pc}
-
-
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
