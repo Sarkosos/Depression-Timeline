@@ -54,16 +54,16 @@ function parseURL() {
 function clean (str){
   if(!str) return null
 
-  let temp = str.trim() //Look up what does
-  return temp.toLowerCase();
+  let temp = str.trim(); // Remove whitespace from both sides of a string
+  return temp.toLowerCase(); // Puts everything to lower case
 }
-
+// Returns which data points the user wants (See checkboxes)
 function getChoiceArray() {
   let arraySubClean = [];
   const arraySubDirt = new URLSearchParams(window.location.search);
 
-  for (cnt = 0; cnt < 6; cnt++)  {
-    arraySubClean[cnt] = clean(arraySubDirt.get(`chbx${cnt}`));
+  for (i = 0; i < 6; i++)  {
+    arraySubClean[i] = clean(arraySubDirt.get(`chbx${i}`));
   }
   return arraySubClean;
 }
@@ -89,16 +89,16 @@ async function queryForID() {
 
   const simpleResults = wdk.simplify.sparqlResults(results)
 
-  var drugUser = parseURL();
+  var drugUser = parseURL(); //Extracts user drug
   var output;
 
   for (i=0; i<simpleResults.length; i++){
-    if (simpleResults[i].drug.label === drugUser){
+    if (simpleResults[i].drug.label === drugUser){ // Searches for the users drug in wikidata
 
       output = simpleResults[i].drug.value;
      }
   }
-  return output;
+  return output; //Returns the WikiData ID of the users drug so we can perform queries
 }
 
 
@@ -129,7 +129,19 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
   const simpleResults = wdk.simplify.sparqlResults(results)
 
   var ld = {};
-  // let StrongestString = '{ ';
+  // The code below is responsible for creating a structured JSON the structure looks as follows:
+  // "name": "aspartame",
+  // "children": [
+  //   {
+  //     "name": "LD50",
+  //     "children": [
+  //       {
+  //         "name": "undefined"
+  //       }
+  //     ]
+  //   },
+  // The code operates by creating a string with a JSON format and then casting
+  // it into a JSON using JSON.parse
   let StrongestString = `{
             "name"     : "LD50",
             "children"   : [
@@ -138,6 +150,7 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
   for (i=0; i<simpleResults.length; i++){
     StrongestString += `{"name" : "${simpleResults[i].ld}"}, `;
   }
+  // This line is here to delete the last comma in the string
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
   ld = JSON.parse(StrongestString);
@@ -344,8 +357,9 @@ WHERE {
 
   for (i=0; i<simpleResults.length; i++){
     holdMyString = simpleResults[i].msLabel;
-    // holdMyString = holdMyString.replace(' " ', " ' ");
-    holdMyString = holdMyString.replace(/([`'"])/g, "");
+    holdMyString = holdMyString.replace(/([`'"])/g, ""); // Some paper titles had
+    // quotation marks or apostrophes which broke the string thus we had to delete
+    //those which this method does
     StrongestString += `{"name" : "${holdMyString}"}, `; 
   }
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
