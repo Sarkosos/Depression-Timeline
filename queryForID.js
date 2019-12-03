@@ -4,7 +4,7 @@
  *  Contains a set of functions divided into 2 groups
  *      WikiData queries
  *          Typically take a wikidata identifier of a drug as an argument
- *          Return an array of results: minimal lenght 0
+ *          Return a structured JSON output containing the results
  *          List:
  *               queryForLD
  *               queryForChemicalStructure
@@ -15,8 +15,8 @@
  *               queryForID
  *          Exeptions
  *               queryForID
- *                    Takes as an argument a type of ID required
- *                    Returns an url that is then fed to accessory function getID
+ *                    Takes no argument
+ *                    Returns WikiData identifier of the drug user put in
  *      Acessory functions
  *          Various functionality that is needed for the running of the code
  *          Returns are individual
@@ -32,9 +32,7 @@
  *                  Takes no argument, takes the user's CHOICE OF RESULTS TO BE DISPLAYED input from URL
  *                  Cleans the input using clean function
  *                  Returns an array of booleans, TRUE (to be displayed) or FALSE (not to be displayed)
- *              getID
- *                  Takes URL as an argument (from queryForID)
- *                  Returns a Wiki-Data identifier of the drug requested in the queryForID
+ *              
  *
  *
  * This file does nothing on it's own! It only contains functions, that need to be called!
@@ -154,16 +152,6 @@ OPTIONAL{ ?drug wdt:P2240 ?ld}
   StrongestString = StrongestString.slice(0, StrongestString.length - 2);
   StrongestString += `]}`;
   ld = JSON.parse(StrongestString);
-
-
-  // DO NOT DELETE THIS CHUNK! It still may be useful later
-
-  // for (i = 0; i < counter; i++){
-  //   eval(`
-  //     ld.name = ld.name${i};
-  //     delete ld.name${i};
-  //     `);
-  // }
 
   return ld;
 }

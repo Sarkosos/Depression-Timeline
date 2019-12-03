@@ -2,7 +2,7 @@
 // This JavaScript does:
 // Take the User choice:
 // 			Which drug is the user interested in?
-// 				Resolved in 'finaliseResults' by calling getID with passing queryForID as an argument
+// 				Resolved in 'finaliseResults' by calling queryForID
 // 					Both of these functions can be seen in queryForID.js file
 // 				Returns a WikiData identifier of the drug: assigned as an 'input' variable,
 // 				which is latter fed to following functions
@@ -17,21 +17,18 @@
 // 			Resolved in 'createJSONOutput' function, which takes WikiData identifier of the requested drug as an argument
 // 				Calls number of functions, all from 'queryForID.js' JavaScript file.
 // 				All functions called take WikiData identifier of a drug as an argument,
-// 				All functions return an array of results, with minimal length of 0
+// 				All functions return a structured JSON output containing the results
 // 			Returns a JSON with ordered results given by the order as described before (when discussing valArray).
 // Feed the user's input into the calculation structure: bring the functions together
 // 			Resolved in  'finaliseResults', function that takes no arguments
 // 				Take the user's input of a drug, get its identifier, and feed it identifier into 'createJSONOutput'
 // 			Returns a JSON output of 'createJSONOutput'
 //
-// Optional: Feed the result to HTML
+// Optional: Remove the preloader when the data is retrieved
 // 			Resolved in 'feedToHTML' function
-// 				Prints the output of 'finaliseResults' into an HTML element with id 'output' in 'callForID.html' page as a
-// 				<pre> element
+// 				Replaces the preloader with an empty opaque divider
 //
-// Final Result: an array of arrays called   finalJSON
-// 				 has 6 primary elements, filled with arrays of variable lenghts
-// 				 dependent on the data available on WikiData
+// Final Result: Present the data by calling tree.js 
 //
 
 // Get the User choice
@@ -91,7 +88,7 @@ async function feedToHTML(){
 
 	txt  = JSON.stringify(data, undefined, 2);
 
-	document.getElementById('output').innerHTML = '<div color="#208DED"><pre> </pre><div>';
+	document.getElementById('output').innerHTML = '<div ><pre> </pre><div>';
 }
 
 feedToHTML();
