@@ -1,12 +1,4 @@
-// Construct the final array
-async function createTree() {
-
-   // Retrieve a WikiData-useful identifier of the drug provided
-
-
-   // Wait for the Promise to be resolved and then return it
-  let output = await finaliseResults();
-
+async function createTree(output) {
 
 var margin = {top: 30, right: 20, bottom: 30, left: 20},
     width = 960,

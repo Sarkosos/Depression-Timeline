@@ -85,12 +85,8 @@ async function finaliseResults() {
 
 async function feedToHTML(){
 	data = await finaliseResults();
-
-	txt  = JSON.stringify(data, undefined, 2);
-
+	createTree(data);
 	document.getElementById('output').innerHTML = '<div ><pre> </pre><div>';
 }
 
 feedToHTML();
-
-createTree();
