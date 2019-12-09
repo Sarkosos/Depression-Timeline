@@ -2,20 +2,19 @@
 
 ***
 ## What the search engine returns 
- - Lethal Dose
  - Affective Dose
+ - Median Lethal Dose
  - Primary Pharma (desired effect)
  - Secondary Pharma (undesired effect)
+ - Drug Interactions
+ - Pregnancy Category
  
- And outputs a table of the above properties for each searched drug.
+ And outputs a collapsible indented tree of the above properties for each searched drug.
 
 what type of data we need from each database 
 - wikidata
 - Chembl
 
--->lethal dose mice (wikid)
--->affective dose (wikid)
--->1 (Chembl & wikid)
--->2 
--->clinical data (?) (chembl)
---> literature (chembl)
+## How to Operate Program
+
+Download all the main in this repository files and place them in the same directory then simply using a web browser (e.g. Chrome/fire fox) open the file "index.html" to launch the product. 
