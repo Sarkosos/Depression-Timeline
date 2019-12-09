@@ -43,12 +43,12 @@ async function createJSONOutput(idIdentifier){
 	// Take into consideration whether the user wanted this information
 	// If the information is not wanted, in place of a result return 0;
 
-    dataLD 		= Object.assign({}, (valArray[0]) ? await queryForLD(idIdentifier): 0);
-    dataChemStr = Object.assign({}, (valArray[1]) ? await queryForChemicalStructure(idIdentifier): 0);
-    dataPrimPha = Object.assign({}, (valArray[2]) ? await queryForPrimePharm(idIdentifier): 0);
-    dataDrugInt = Object.assign({}, (valArray[3]) ? await queryForDrugInteraction(idIdentifier): 0);
-    dataArticle = Object.assign({}, (valArray[4]) ? await queryForArticles(idIdentifier): 0);
-    dataPregCat = Object.assign({}, (valArray[5]) ? await queryForPregnancyCategory(idIdentifier): 0);
+    dataLD 	= (valArray[0]) ? await queryForLD(idIdentifier): 0;
+    dataChemStr = (valArray[1]) ? await queryForChemicalStructure(idIdentifier): 0;
+    dataPrimPha = (valArray[2]) ? await queryForPrimePharm(idIdentifier): 0;
+    dataDrugInt = (valArray[3]) ? await queryForDrugInteraction(idIdentifier): 0;
+    dataArticle = (valArray[4]) ? await queryForArticles(idIdentifier): 0;
+    dataPregCat = (valArray[5]) ? await queryForPregnancyCategory(idIdentifier): 0;
 
     name = parseURL();
 
