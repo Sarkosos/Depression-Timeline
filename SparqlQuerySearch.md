@@ -1,4 +1,4 @@
----bash
+```bash
 SELECT DISTINCT ?drug ?drugLabel ?ID ?msLabel 
 WITH
 {
@@ -32,4 +32,4 @@ OPTIONAL{?drug wdt:P3489 ?pc}
   INCLUDE %ARTICLES
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
----
+```
